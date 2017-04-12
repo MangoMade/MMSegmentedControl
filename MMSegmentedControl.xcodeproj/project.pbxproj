@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		526658C31E9DBEC700D3351B /* UnderLineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526658C21E9DBEC700D3351B /* UnderLineSegmentedControl.swift */; };
 		52D469721E9D309700688C05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D469711E9D309700688C05 /* AppDelegate.swift */; };
 		52D469741E9D309700688C05 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D469731E9D309700688C05 /* ViewController.swift */; };
 		52D469771E9D309700688C05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52D469751E9D309700688C05 /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		526658C21E9DBEC700D3351B /* UnderLineSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnderLineSegmentedControl.swift; sourceTree = "<group>"; };
 		52D4696E1E9D309700688C05 /* MMSegmentedControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMSegmentedControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D469711E9D309700688C05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52D469731E9D309700688C05 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				52D469871E9D312900688C05 /* SegmentedControl.swift */,
 				52D469881E9D312900688C05 /* SegmentedControlItem.swift */,
 				52D469891E9D312900688C05 /* SegmentedControlItemCell.swift */,
+				526658C21E9DBEC700D3351B /* UnderLineSegmentedControl.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -159,6 +162,7 @@
 			files = (
 				52D469741E9D309700688C05 /* ViewController.swift in Sources */,
 				52D469721E9D309700688C05 /* AppDelegate.swift in Sources */,
+				526658C31E9DBEC700D3351B /* UnderLineSegmentedControl.swift in Sources */,
 				52D4698C1E9D312900688C05 /* SegmentedControlItem.swift in Sources */,
 				52D4698D1E9D312900688C05 /* SegmentedControlItemCell.swift in Sources */,
 				52D4698B1E9D312900688C05 /* SegmentedControl.swift in Sources */,
@@ -326,6 +330,7 @@
 				52D469821E9D309700688C05 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

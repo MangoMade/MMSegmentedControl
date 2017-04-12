@@ -5,15 +5,6 @@
 
 import UIKit
 
-private extension String {
-    
-    func getTextRectSize(font:UIFont, size:CGSize) -> CGRect {
-        let attributes = [NSFontAttributeName: font]
-        let rect:CGRect = self.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-        return rect;
-    }
-}
-
 open class SegmentedControl: UIControl {
     
     // MARK: - public properties
@@ -24,7 +15,7 @@ open class SegmentedControl: UIControl {
             collectionView.layoutIfNeeded()
             if itemTitles.count > 0 {
                 selectedIndex = 0
-//                didSelectItem?(0)
+                sendActions(for: .valueChanged)
             }
         }
     }
@@ -43,10 +34,6 @@ open class SegmentedControl: UIControl {
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
             }
         }
-    }
-    
-    open var countOfItems: Int {
-        return itemTitles.count
     }
     
     open var isScrollEnabled: Bool {
@@ -93,15 +80,13 @@ open class SegmentedControl: UIControl {
         return line
     }()
     
-    
-    
     // MARK: - private properties
     
     fileprivate struct ReuseIdentifier {
         static let cell = "cellReuseIdentifier"
     }
     
-    fileprivate let collectionView: UICollectionView = {
+    let collectionView: UICollectionView = {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -116,24 +101,19 @@ open class SegmentedControl: UIControl {
         return collectionView
     }()
     
-    
     // MARK: - initlization
     
-    public init(itemTitles: [String]) {
+    public init(itemTitles: [String] = []) {
         self.itemTitles = itemTitles
         super.init(frame: CGRect.zero)
-        initUserInterface()
-    }
-    
-    public convenience init() {
-        self.init(itemTitles: [])
+        commonInit()
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func initUserInterface() {
+    private func commonInit() {
         collectionView.dataSource = self
         collectionView.delegate   = self
         collectionView.register(SegmentedControlItemCell.self, forCellWithReuseIdentifier: ReuseIdentifier.cell)
@@ -172,6 +152,8 @@ open class SegmentedControl: UIControl {
     }
 }
 
+
+// MARK: - UICollectionViewDataSource
 extension SegmentedControl: UICollectionViewDataSource {
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -188,21 +170,35 @@ extension SegmentedControl: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension SegmentedControl: UICollectionViewDelegateFlowLayout {
     
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout collectionViewLayout: UICollectionViewLayout,
+                               sizeForItemAt indexPath: IndexPath) -> CGSize
+    {
         var width: CGFloat = 0
-        if itemWidth > 0 {
-            width = itemWidth
+        if isScrollEnabled {
+            
+            if itemWidth > 0 {
+                width = itemWidth
+            } else {
+                let text = itemTitles[indexPath.row]
+                let size = text.getTextRectSize(font: SegmentedControlItemCell.normalFont,
+                                                size: CGSize(width: 100, height: 100))
+                width = textMargin + size.width
+            }
+            
         } else {
-            let text = itemTitles[indexPath.row]
-            let size = text.getTextRectSize(font: SegmentedControlItemCell.normalFont, size: CGSize(width: 100, height: 100))
-            width = textMargin + size.width
+
+            width = bounds.width / CGFloat(itemTitles.count)
+            
         }
         return CGSize(width: width, height: bounds.height)
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension SegmentedControl: UICollectionViewDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -212,60 +208,12 @@ extension SegmentedControl: UICollectionViewDelegate {
     }
 }
 
-
-class LineSlideTabBar: SegmentedControl {
+private extension String {
     
-    fileprivate let lineView: UIView = {
-        let lineView = UIView()
-        lineView.backgroundColor = UIColor.black
-        
-        return lineView
-    }()
-    
-    override var selectedIndex: Int? {
-        didSet {
-            let animated = lineView.bounds.size != .zero
-            moveLineToSelectedCellBottom(animated)
-        }
-    }
-    
-    fileprivate let lineHeight: CGFloat = 2
-    
-    override init(itemTitles: [String]) {
-        super.init(itemTitles: itemTitles)
-        selectedTextColor = UIColor.black
-        normalTransform = CGAffineTransform.identity
-        itemWidth = 150
-        collectionView.addSubview(lineView)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func didMoveToWindow() {
-        super.didMoveToWindow()
-        moveLineToSelectedCellBottom(false)
-    }
-    
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        moveLineToSelectedCellBottom(false)
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        moveLineToSelectedCellBottom(false) 
-    }
-    
-    fileprivate func moveLineToSelectedCellBottom(_ animated: Bool = true) {
-        guard let selectedIndex = selectedIndex else { return }
-        let indexPath = IndexPath(row: selectedIndex, section: 0)
-        if let cell = collectionView.cellForItem(at: indexPath) {
-            UIView.animate(withDuration: animated ? 0.25 : 0, animations: {
-                self.lineView.center = CGPoint(x: cell.center.x, y: cell.frame.maxY - self.lineHeight / 2)
-                self.lineView.bounds = CGRect(x: 0, y: 0, width: cell.bounds.width, height: self.lineHeight)
-            }) 
-        }
+    func getTextRectSize(font:UIFont, size:CGSize) -> CGRect {
+        let attributes = [NSFontAttributeName: font]
+        let rect:CGRect = self.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
+        return rect;
     }
 }
+

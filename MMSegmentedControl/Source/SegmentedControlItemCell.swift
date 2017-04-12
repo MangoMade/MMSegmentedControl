@@ -47,7 +47,7 @@ class SegmentedControlItemCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func initUserInterface() {
+    private func initUserInterface() {
         translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = classForCoder.normalFont
