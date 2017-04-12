@@ -14,14 +14,14 @@ class SegmentedControlItemCell: UICollectionViewCell {
     
     var fontSize: CGFloat = Const.defaultFontSize {
         didSet {
-            let scale = fontSize / selectedFontSize
-            textTransform = CGAffineTransform(scaleX: scale, y: scale)
+            updateTransform()
         }
     }
     
     var selectedFontSize: CGFloat = Const.defaultSelectedFontSize {
         didSet {
             titleLabel.font = UIFont.systemFont(ofSize: selectedFontSize)
+            updateTransform()
         }
     }
     
@@ -43,7 +43,7 @@ class SegmentedControlItemCell: UICollectionViewCell {
     
     private var textTransform: CGAffineTransform {
         didSet {
-            titleLabel.transform = self.isSelected ? CGAffineTransform.identity : self.textTransform
+            titleLabel.transform = isSelected ? .identity : textTransform
         }
     }
     
@@ -59,7 +59,6 @@ class SegmentedControlItemCell: UICollectionViewCell {
     override init(frame: CGRect) {
         let scale = self.selectedFontSize / self.fontSize
         textTransform = CGAffineTransform(scaleX: scale, y: scale)
-
         super.init(frame: frame)
         commonInit()
     }
@@ -91,5 +90,10 @@ class SegmentedControlItemCell: UICollectionViewCell {
                                               multiplier: 1,
                                               constant: 0))
         
+    }
+    
+    private func updateTransform() {
+        let scale = fontSize / selectedFontSize
+        textTransform = CGAffineTransform(scaleX: scale, y: scale)
     }
 }

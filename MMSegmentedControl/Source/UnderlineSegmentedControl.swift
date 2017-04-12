@@ -1,5 +1,5 @@
 //
-//  UnderLineSegmentedControl.swift
+//  UnderlineSegmentedControl.swift
 //  MMSegmentedControl
 //
 //  Created by Aqua on 2017/4/12.
@@ -8,17 +8,17 @@
 
 import UIKit
 
-class UnderLineSegmentedControl: SegmentedControl {
+class UnderlineSegmentedControl: SegmentedControl {
     
-    let underLine: UIView = {
+    let underline: UIView = {
         let lineView = UIView()
-        lineView.backgroundColor = UIColor.black
+        lineView.backgroundColor = Const.defaultSelectedTextColor
         return lineView
     }()
     
     override var selectedIndex: Int? {
         didSet {
-            let animated = underLine.bounds.size != .zero
+            let animated = underline.bounds.size != .zero
             moveLineToSelectedCellBottom(animated)
         }
     }
@@ -27,28 +27,17 @@ class UnderLineSegmentedControl: SegmentedControl {
     
     override public init(itemTitles: [String] = []) {
         super.init(itemTitles: itemTitles)
-        selectedTextColor = UIColor.black
         selectedFontSize = fontSize
-        collectionView.addSubview(underLine)
+        collectionView.addSubview(underline)
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func didMoveToWindow() {
-        super.didMoveToWindow()
-        moveLineToSelectedCellBottom(false)
-    }
-    
-    override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        moveLineToSelectedCellBottom(false)
+        super.init(coder: aDecoder)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        moveLineToSelectedCellBottom(false)
+        moveLineToSelectedCellBottom()
     }
     
     private func moveLineToSelectedCellBottom(_ animated: Bool = true) {
@@ -58,8 +47,8 @@ class UnderLineSegmentedControl: SegmentedControl {
             return
         }
         UIView.animate(withDuration: animated ? 0.25 : 0) {
-            self.underLine.center = CGPoint(x: cell.center.x, y: cell.frame.maxY - self.lineHeight / 2)
-            self.underLine.bounds = CGRect(x: 0, y: 0, width: cell.bounds.width, height: self.lineHeight)
+            self.underline.center = CGPoint(x: cell.center.x, y: cell.frame.maxY - self.lineHeight / 2)
+            self.underline.bounds = CGRect(x: 0, y: 0, width: cell.bounds.width, height: self.lineHeight)
         }
     }
 }

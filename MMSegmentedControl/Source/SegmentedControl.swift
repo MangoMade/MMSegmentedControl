@@ -49,7 +49,7 @@ open class SegmentedControl: UIControl {
     
     open var textMargin: CGFloat = 30
     
-    open var selectedTextColor = UIColor.red {
+    open var selectedTextColor = Const.defaultSelectedTextColor {
         didSet {
             visibleCellsForEach {
                 $0.selectedTextColor = selectedTextColor
@@ -57,7 +57,7 @@ open class SegmentedControl: UIControl {
         }
     }
     
-    open var normalTextColor   = UIColor.black {
+    open var normalTextColor   = Const.defaultTextColor {
         didSet {
             visibleCellsForEach {
                 $0.normalTextColor = normalTextColor
@@ -112,9 +112,13 @@ open class SegmentedControl: UIControl {
     // MARK: - initlization
     
     public init(itemTitles: [String] = []) {
-        self.itemTitles = itemTitles
+
         super.init(frame: CGRect.zero)
         commonInit()
+        self.itemTitles = itemTitles
+        if self.itemTitles.count > 0 {
+            selectedIndex = 0
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -148,6 +152,7 @@ open class SegmentedControl: UIControl {
                                                            options: [],
                                                            metrics: ["onePx": Screen.onePX],
                                                            views: lineViews))
+        
     }
     
     // MARK: - Private Methods
@@ -201,7 +206,6 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
         } else {
 
             width = bounds.width / CGFloat(itemTitles.count)
-            
         }
         return CGSize(width: width, height: bounds.height)
     }
