@@ -37,18 +37,18 @@ class UnderlineSegmentedControl: SegmentedControl {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        moveLineToSelectedCellBottom()
+        moveLineToSelectedCellBottom(false)
     }
     
     private func moveLineToSelectedCellBottom(_ animated: Bool = true) {
         guard let selectedIndex = selectedIndex else { return }
         let indexPath = IndexPath(row: selectedIndex, section: 0)
-        guard let cell = collectionView.cellForItem(at: indexPath) else {
+        guard let layout = collectionView.layoutAttributesForItem(at: indexPath) else {
             return
         }
         UIView.animate(withDuration: animated ? 0.25 : 0) {
-            self.underline.center = CGPoint(x: cell.center.x, y: cell.frame.maxY - self.lineHeight / 2)
-            self.underline.bounds = CGRect(x: 0, y: 0, width: cell.bounds.width, height: self.lineHeight)
+            self.underline.center = CGPoint(x: layout.center.x, y: layout.frame.maxY - self.lineHeight / 2)
+            self.underline.bounds = CGRect(x: 0, y: 0, width: layout.bounds.width, height: self.lineHeight)
         }
     }
 }
