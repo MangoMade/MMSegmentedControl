@@ -65,10 +65,18 @@ open class SegmentedControl: UIControl {
         }
     }
     
-    open var normalTransform = CGAffineTransform(scaleX: 0.9, y: 0.9) {
+    open var fontSize: CGFloat = Const.defaultFontSize {
         didSet {
             visibleCellsForEach {
-                $0.normalTransform = normalTransform
+                $0.fontSize = fontSize
+            }
+        }
+    }
+    
+    open var selectedFontSize: CGFloat = Const.defaultSelectedFontSize {
+        didSet {
+            visibleCellsForEach {
+                $0.selectedFontSize = selectedFontSize
             }
         }
     }
@@ -165,7 +173,8 @@ extension SegmentedControl: UICollectionViewDataSource {
         cell.titleLabel.text = itemTitles[indexPath.row]
         cell.normalTextColor = normalTextColor
         cell.selectedTextColor = selectedTextColor
-        cell.normalTransform = normalTransform
+        cell.fontSize = fontSize
+        cell.selectedFontSize = selectedFontSize
         return cell
     }
 }
@@ -184,8 +193,8 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
                 width = itemWidth
             } else {
                 let text = itemTitles[indexPath.row]
-                let size = text.getTextRectSize(font: SegmentedControlItemCell.normalFont,
-                                                size: CGSize(width: 100, height: 100))
+                let size = text.getTextRectSize(font: UIFont.systemFont(ofSize: fontSize),
+                                                size: CGSize(width: 100, height: 100)) // 先随便写一个
                 width = textMargin + size.width
             }
             

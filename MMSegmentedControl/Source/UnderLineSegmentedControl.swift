@@ -28,7 +28,7 @@ class UnderLineSegmentedControl: SegmentedControl {
     override public init(itemTitles: [String] = []) {
         super.init(itemTitles: itemTitles)
         selectedTextColor = UIColor.black
-        normalTransform = CGAffineTransform.identity
+        selectedFontSize = fontSize
         collectionView.addSubview(underLine)
     }
     

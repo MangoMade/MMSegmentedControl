@@ -12,9 +12,20 @@ class SegmentedControlItemCell: UICollectionViewCell {
     
     let titleLabel = UILabel()
     
-    static let normalFont = UIFont.systemFont(ofSize: 16)
+    var fontSize: CGFloat = Const.defaultFontSize {
+        didSet {
+            let scale = fontSize / selectedFontSize
+            textTransform = CGAffineTransform(scaleX: scale, y: scale)
+        }
+    }
     
-    var selectedTextColor = UIColor.red {
+    var selectedFontSize: CGFloat = Const.defaultSelectedFontSize {
+        didSet {
+            titleLabel.font = UIFont.systemFont(ofSize: selectedFontSize)
+        }
+    }
+    
+    var selectedTextColor = Const.defaultSelectedTextColor {
         didSet {
             if isSelected {
                 self.titleLabel.textColor = selectedTextColor
@@ -22,7 +33,7 @@ class SegmentedControlItemCell: UICollectionViewCell {
         }
     }
     
-    var normalTextColor   = UIColor.black {
+    var normalTextColor   = Const.defaultTextColor {
         didSet {
             if !isSelected {
                 self.titleLabel.textColor = normalTextColor
@@ -30,28 +41,38 @@ class SegmentedControlItemCell: UICollectionViewCell {
         }
     }
     
-    var normalTransform = CGAffineTransform(scaleX: 0.9, y: 0.9) {
+    private var textTransform: CGAffineTransform {
         didSet {
-            if !isSelected {
-                self.titleLabel.transform = normalTransform
-            }
+            titleLabel.transform = self.isSelected ? CGAffineTransform.identity : self.textTransform
+        }
+    }
+    
+    override var isSelected: Bool {
+        didSet {
+            UIView.animate(withDuration: 0.15, animations: {
+                self.titleLabel.transform = self.isSelected ? CGAffineTransform.identity : self.textTransform
+                self.titleLabel.textColor = self.isSelected ? self.selectedTextColor : self.normalTextColor
+            })
         }
     }
     
     override init(frame: CGRect) {
+        let scale = self.selectedFontSize / self.fontSize
+        textTransform = CGAffineTransform(scaleX: scale, y: scale)
+
         super.init(frame: frame)
-        initUserInterface()
+        commonInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func initUserInterface() {
+    private func commonInit() {
         translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font = classForCoder.normalFont
-        titleLabel.transform = normalTransform
+        titleLabel.font = UIFont.systemFont(ofSize: selectedFontSize)
+        titleLabel.transform = textTransform
         addSubview(titleLabel)
         
         self.addConstraint(NSLayoutConstraint(item: titleLabel,
@@ -70,15 +91,5 @@ class SegmentedControlItemCell: UICollectionViewCell {
                                               multiplier: 1,
                                               constant: 0))
         
-        
-    }
-    
-    override var isSelected: Bool {
-        didSet {
-            UIView.animate(withDuration: 0.15, animations: {
-                self.titleLabel.transform = self.isSelected ? CGAffineTransform.identity : self.normalTransform
-                self.titleLabel.textColor = self.isSelected ? self.selectedTextColor : self.normalTextColor
-            })
-        }
     }
 }
