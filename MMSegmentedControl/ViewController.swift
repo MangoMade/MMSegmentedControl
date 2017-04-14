@@ -13,6 +13,8 @@ class ViewController: UIViewController {
     let bar = UnderlineSegmentedControl(itemTitles: ["1", "22", "333", "4444", "55555", "666666", "7777777", "88888888", ])
     let lineBar = UnderlineSegmentedControl()
     
+    let button = UIButton(type: .system)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,12 +33,19 @@ class ViewController: UIViewController {
         lineBar.itemTitles = ["111", "222", ]
         lineBar.frame = CGRect(x: 0, y: 200, width: Screen.width, height: 50)
         lineBar.isScrollEnabled = false
+        lineBar.textMargin = 50
+        lineBar.leftMargin = 50
+        lineBar.rightMargin = 50
         view.addSubview(lineBar)
+        
+        button.setTitle("change", for: .normal)
+        button.addTarget(self, action: #selector(change(sender:)), for: .touchUpInside)
+        button.frame = CGRect(x: 100, y: 300, width: 100, height: 50)
+        view.addSubview(button)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
 
-//        bar.selectedIndex = 5
+    func change(sender: UIButton) {
+        lineBar.textMargin = 100
     }
 }

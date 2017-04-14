@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "8.0"
 
 
-  s.source       = { :git => "git@github.com:MangoMade/MMSegmentedControl.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/MangoMade/MMSegmentedControl.git", :tag => "#{s.version}" }
 
   s.source_files  = "MMSegmentedControl/Source"
 

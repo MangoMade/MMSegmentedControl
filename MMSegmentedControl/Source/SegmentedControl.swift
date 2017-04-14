@@ -45,9 +45,35 @@ open class SegmentedControl: UIControl {
         }
     }
     
-    open var itemWidth: CGFloat = -1
+    open var itemWidth: CGFloat     = -1 {
+        didSet {
+            updateCollectionViewLayout()
+        }
+    }
     
-    open var textMargin: CGFloat = 30
+    open var textMargin: CGFloat    = 0 {
+        didSet {
+            updateCollectionViewLayout()
+        }
+    }
+    
+    open var leftMargin: CGFloat    = 12 {
+        didSet {
+            updateCollectionViewLayout()
+        }
+    }
+    
+    open var rightMargin: CGFloat   = 12 {
+        didSet {
+            updateCollectionViewLayout()
+        }
+    }
+    
+    open var padding: CGFloat       = 15 {
+        didSet {
+            updateCollectionViewLayout()
+        }
+    }
     
     open var selectedTextColor = Const.defaultSelectedTextColor {
         didSet {
@@ -163,6 +189,10 @@ open class SegmentedControl: UIControl {
             doSomething(cell)
         }
     }
+    
+    private func updateCollectionViewLayout() {
+        collectionView.reloadSections(IndexSet(integer: 0))
+    }
 }
 
 
@@ -174,7 +204,10 @@ extension SegmentedControl: UICollectionViewDataSource {
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReuseIdentifier.cell, for: indexPath) as! SegmentedControlItemCell
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReuseIdentifier.cell,
+                                                      for: indexPath) as! SegmentedControlItemCell
+        
         cell.titleLabel.text = itemTitles[indexPath.row]
         cell.normalTextColor = normalTextColor
         cell.selectedTextColor = selectedTextColor
@@ -200,14 +233,28 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
                 let text = itemTitles[indexPath.row]
                 let size = text.getTextRectSize(font: UIFont.systemFont(ofSize: fontSize),
                                                 size: CGSize(width: 100, height: 100)) // 先随便写一个
-                width = textMargin + size.width
+                width = 2 * padding + size.width
             }
             
         } else {
-
-            width = bounds.width / CGFloat(itemTitles.count)
+            let countFloat = CGFloat(itemTitles.count)
+            let contentWidth = bounds.width - leftMargin - rightMargin - (countFloat - 1) * textMargin
+            width = contentWidth / countFloat
         }
         return CGSize(width: width, height: bounds.height)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout collectionViewLayout: UICollectionViewLayout,
+                               insetForSectionAt section: Int) -> UIEdgeInsets
+    {
+        return UIEdgeInsets(top: 0, left: leftMargin, bottom: 0, right: rightMargin)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout collectionViewLayout: UICollectionViewLayout,
+                               minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return textMargin
     }
 }
 

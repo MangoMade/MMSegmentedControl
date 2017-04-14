@@ -68,6 +68,8 @@ class SegmentedControlItemCell: UICollectionViewCell {
     }
     
     private func commonInit() {
+        layer.borderColor = UIColor.black.cgColor
+        layer.borderWidth = 1
         translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = UIFont.systemFont(ofSize: selectedFontSize)
