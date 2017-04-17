@@ -18,34 +18,49 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(bar)
+        
         let barViews = ["bar": bar]
         bar.translatesAutoresizingMaskIntoConstraints = false
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[bar]|",
-                                                           options: [],
-                                                           metrics: nil,
-                                                           views: barViews))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(100)-[bar(50)]",
-                                                           options: [],
-                                                           metrics: nil,
-                                                           views: barViews))
-        
+        view.addSubview(bar)
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[bar]|",
+                                                                   options: [],
+                                                                   metrics: nil,
+                                                                   views: barViews))
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(100)-[bar(50)]",
+                                                                   options: [],
+                                                                   metrics: nil,
+                                                                   views: barViews))
+      
         lineBar.itemTitles = ["111", "222", ]
         lineBar.frame = CGRect(x: 0, y: 200, width: Screen.width, height: 50)
-        lineBar.isScrollEnabled = false
-        lineBar.textMargin = 50
-        lineBar.leftMargin = 50
-        lineBar.rightMargin = 50
+//        lineBar.isScrollEnabled = false
+//        lineBar.textMargin = 50
+//        lineBar.leftMargin = 50
+//        lineBar.rightMargin = 50
         view.addSubview(lineBar)
         
         button.setTitle("change", for: .normal)
         button.addTarget(self, action: #selector(change(sender:)), for: .touchUpInside)
         button.frame = CGRect(x: 100, y: 300, width: 100, height: 50)
         view.addSubview(button)
+        
+        let pushButton = UIButton(type: .system)
+        pushButton.setTitle("push", for: .normal)
+        pushButton.addTarget(self, action: #selector(push(sender:)), for: .touchUpInside)
+        pushButton.frame = CGRect(x: 100, y: 400, width: 100, height: 50)
+        view.addSubview(pushButton)
     }
     
 
     func change(sender: UIButton) {
-        lineBar.textMargin = 100
+//        if lineBar.textMargin == 50 {
+//            lineBar.textMargin = 100
+//        } else {
+//            lineBar.textMargin = 50
+//        }
+    }
+    
+    func push(sender: UIButton) {
+        navigationController?.pushViewController(SegmentedViewController(), animated: true)
     }
 }

@@ -7,6 +7,10 @@ import UIKit
 
 open class SegmentedControl: UIControl {
     
+    open override class var requiresConstraintBasedLayout: Bool {
+        return true
+    }
+    
     // MARK: - public properties
     
     open var itemTitles: [String] = [] {
@@ -137,7 +141,7 @@ open class SegmentedControl: UIControl {
     
     // MARK: - initlization
     
-    public init(itemTitles: [String] = []) {
+    public required init(itemTitles: [String] = []) {
 
         super.init(frame: CGRect.zero)
         commonInit()
@@ -159,26 +163,25 @@ open class SegmentedControl: UIControl {
  
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         let views = ["collectionView": collectionView]
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[collectionView]|",
-                                                           options: [],
-                                                           metrics: nil,
-                                                           views: views))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[collectionView]|",
-                                                           options: [],
-                                                           metrics: nil,
-                                                           views: views))
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[collectionView]|",
+                                                                   options: [],
+                                                                   metrics: nil,
+                                                                   views: views))
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|[collectionView]|",
+                                                                   options: [],
+                                                                   metrics: nil,
+                                                                   views: views))
 
         addSubview(bottomLine)
         let lineViews = ["grayLine": bottomLine]
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[grayLine]|",
-                                                           options: [],
-                                                           metrics: nil,
-                                                           views: lineViews))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[grayLine(onePx)]|",
-                                                           options: [],
-                                                           metrics: ["onePx": Screen.onePX],
-                                                           views: lineViews))
-        
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[grayLine]|",
+                                                                   options: [],
+                                                                   metrics: nil,
+                                                                   views: lineViews))
+        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[grayLine(onePx)]|",
+                                                                   options: [],
+                                                                   metrics: ["onePx": Screen.onePX],
+                                                                   views: lineViews))
     }
     
     // MARK: - Private Methods
@@ -191,7 +194,9 @@ open class SegmentedControl: UIControl {
     }
     
     private func updateCollectionViewLayout() {
+        let index = selectedIndex
         collectionView.reloadSections(IndexSet(integer: 0))
+        selectedIndex = index
     }
 }
 

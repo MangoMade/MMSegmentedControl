@@ -74,21 +74,21 @@ class SegmentedControlItemCell: UICollectionViewCell {
         titleLabel.transform = textTransform
         addSubview(titleLabel)
         
-        self.addConstraint(NSLayoutConstraint(item: titleLabel,
-                                              attribute: .centerX,
-                                              relatedBy: .equal,
-                                              toItem: self,
-                                              attribute: .centerX,
-                                              multiplier: 1,
-                                              constant: 0))
+        NSLayoutConstraint(item: titleLabel,
+                          attribute: .centerX,
+                          relatedBy: .equal,
+                          toItem: self,
+                          attribute: .centerX,
+                          multiplier: 1,
+                          constant: 0).isActive = true
         
-        self.addConstraint(NSLayoutConstraint(item: titleLabel,
-                                              attribute: .centerY,
-                                              relatedBy: .equal,
-                                              toItem: self,
-                                              attribute: .centerY,
-                                              multiplier: 1,
-                                              constant: 0))
+        NSLayoutConstraint(item: titleLabel,
+                          attribute: .centerY,
+                          relatedBy: .equal,
+                          toItem: self,
+                          attribute: .centerY,
+                          multiplier: 1,
+                          constant: 0).isActive = true
         
     }
     

@@ -8,34 +8,38 @@
 
 import UIKit
 
-class UnderlineSegmentedControl: SegmentedControl {
+open class UnderlineSegmentedControl: SegmentedControl {
     
-    let underline: UIView = {
+    public let underline: UIView = {
         let lineView = UIView()
         lineView.backgroundColor = Const.defaultSelectedTextColor
         return lineView
     }()
     
-    override var selectedIndex: Int? {
+    override open var selectedIndex: Int? {
         didSet {
             let animated = underline.bounds.size != .zero
             moveLineToSelectedCellBottom(animated)
         }
     }
     
-    fileprivate let lineHeight: CGFloat = 2
+    open var lineHeight: CGFloat = 2 {
+        didSet {
+            moveLineToSelectedCellBottom(false)
+        }
+    }
     
-    override public init(itemTitles: [String] = []) {
+    public required init(itemTitles: [String] = []) {
         super.init(itemTitles: itemTitles)
         selectedFontSize = fontSize
         collectionView.addSubview(underline)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    override func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         moveLineToSelectedCellBottom(false)
     }

@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		525F202D1EA45F7A00E0E5AA /* SegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F202C1EA45F7A00E0E5AA /* SegmentedControlView.swift */; };
+		525F202F1EA45F9500E0E5AA /* SegmentedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525F202E1EA45F9500E0E5AA /* SegmentedViewController.swift */; };
 		526658C51E9DDB0A00D3351B /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526658C41E9DDB0A00D3351B /* Const.swift */; };
 		526658C71E9E1F2400D3351B /* UnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526658C61E9E1F2400D3351B /* UnderlineSegmentedControl.swift */; };
 		52D469721E9D309700688C05 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D469711E9D309700688C05 /* AppDelegate.swift */; };
 		52D469741E9D309700688C05 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D469731E9D309700688C05 /* ViewController.swift */; };
-		52D469771E9D309700688C05 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52D469751E9D309700688C05 /* Main.storyboard */; };
 		52D469791E9D309700688C05 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52D469781E9D309700688C05 /* Assets.xcassets */; };
 		52D4697C1E9D309700688C05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52D4697A1E9D309700688C05 /* LaunchScreen.storyboard */; };
 		52D4698A1E9D312900688C05 /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D469861E9D312900688C05 /* Screen.swift */; };
@@ -20,12 +21,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		525F202C1EA45F7A00E0E5AA /* SegmentedControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlView.swift; sourceTree = "<group>"; };
+		525F202E1EA45F9500E0E5AA /* SegmentedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedViewController.swift; sourceTree = "<group>"; };
 		526658C41E9DDB0A00D3351B /* Const.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		526658C61E9E1F2400D3351B /* UnderlineSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControl.swift; sourceTree = "<group>"; };
 		52D4696E1E9D309700688C05 /* MMSegmentedControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMSegmentedControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D469711E9D309700688C05 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52D469731E9D309700688C05 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		52D469761E9D309700688C05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		52D469781E9D309700688C05 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52D4697B1E9D309700688C05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52D4697D1E9D309700688C05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -64,10 +66,10 @@
 		52D469701E9D309700688C05 /* MMSegmentedControl */ = {
 			isa = PBXGroup;
 			children = (
-				52D469711E9D309700688C05 /* AppDelegate.swift */,
 				52D469851E9D310100688C05 /* Source */,
 				52D469731E9D309700688C05 /* ViewController.swift */,
-				52D469751E9D309700688C05 /* Main.storyboard */,
+				525F202E1EA45F9500E0E5AA /* SegmentedViewController.swift */,
+				52D469711E9D309700688C05 /* AppDelegate.swift */,
 				52D469781E9D309700688C05 /* Assets.xcassets */,
 				52D4697A1E9D309700688C05 /* LaunchScreen.storyboard */,
 				52D4697D1E9D309700688C05 /* Info.plist */,
@@ -83,6 +85,7 @@
 				52D469891E9D312900688C05 /* SegmentedControlItemCell.swift */,
 				526658C61E9E1F2400D3351B /* UnderlineSegmentedControl.swift */,
 				526658C41E9DDB0A00D3351B /* Const.swift */,
+				525F202C1EA45F7A00E0E5AA /* SegmentedControlView.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -149,7 +152,6 @@
 			files = (
 				52D4697C1E9D309700688C05 /* LaunchScreen.storyboard in Resources */,
 				52D469791E9D309700688C05 /* Assets.xcassets in Resources */,
-				52D469771E9D309700688C05 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,8 +165,10 @@
 				52D469741E9D309700688C05 /* ViewController.swift in Sources */,
 				52D469721E9D309700688C05 /* AppDelegate.swift in Sources */,
 				52D4698D1E9D312900688C05 /* SegmentedControlItemCell.swift in Sources */,
+				525F202F1EA45F9500E0E5AA /* SegmentedViewController.swift in Sources */,
 				526658C51E9DDB0A00D3351B /* Const.swift in Sources */,
 				526658C71E9E1F2400D3351B /* UnderlineSegmentedControl.swift in Sources */,
+				525F202D1EA45F7A00E0E5AA /* SegmentedControlView.swift in Sources */,
 				52D4698B1E9D312900688C05 /* SegmentedControl.swift in Sources */,
 				52D4698A1E9D312900688C05 /* Screen.swift in Sources */,
 			);
@@ -173,14 +177,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		52D469751E9D309700688C05 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				52D469761E9D309700688C05 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		52D4697A1E9D309700688C05 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

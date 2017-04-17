@@ -9,7 +9,7 @@
 import UIKit
 
 // MARK: - consts about main screen
-struct Screen {
+internal struct Screen {
     
     static var bounds: CGRect {
         return UIScreen.main.bounds
