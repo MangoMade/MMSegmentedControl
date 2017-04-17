@@ -134,8 +134,9 @@ open class SegmentedControl: UIControl {
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionView.allowsMultipleSelection = false
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = UIColor.clear
-        
+
         return collectionView
     }()
     

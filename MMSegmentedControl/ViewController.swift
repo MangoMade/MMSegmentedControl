@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        automaticallyAdjustsScrollViewInsets = false
         let barViews = ["bar": bar]
         bar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(bar)
@@ -33,10 +33,10 @@ class ViewController: UIViewController {
       
         lineBar.itemTitles = ["111", "222", ]
         lineBar.frame = CGRect(x: 0, y: 200, width: Screen.width, height: 50)
-//        lineBar.isScrollEnabled = false
-//        lineBar.textMargin = 50
-//        lineBar.leftMargin = 50
-//        lineBar.rightMargin = 50
+        lineBar.isScrollEnabled = false
+        lineBar.textMargin = 50
+        lineBar.leftMargin = 50
+        lineBar.rightMargin = 50
         view.addSubview(lineBar)
         
         button.setTitle("change", for: .normal)
@@ -53,11 +53,11 @@ class ViewController: UIViewController {
     
 
     func change(sender: UIButton) {
-//        if lineBar.textMargin == 50 {
-//            lineBar.textMargin = 100
-//        } else {
-//            lineBar.textMargin = 50
-//        }
+        if lineBar.textMargin == 50 {
+            lineBar.textMargin = 100
+        } else {
+            lineBar.textMargin = 50
+        }
     }
     
     func push(sender: UIButton) {
