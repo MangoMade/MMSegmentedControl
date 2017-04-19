@@ -21,9 +21,11 @@ open class SegmentedControlView<SegmentedControlType: SegmentedControl>: UIView 
     private var contentView = UIScrollView()
     
     var items: [SegmentedControlViewItem] {
+        willSet {
+            items.map{$0.view}.forEach{ $0.removeFromSuperview() }
+        }
         didSet {
-            contentView.subviews.forEach { $0.removeFromSuperview() }
-            items.map{$0.view}.forEach(addSubview(_:))
+            items.map{$0.view}.forEach(contentView.addSubview)
             segmentedControl.itemTitles = items.map{ $0.title }
             layoutIfNeeded()
         }
@@ -34,14 +36,15 @@ open class SegmentedControlView<SegmentedControlType: SegmentedControl>: UIView 
         contentView.backgroundColor = UIColor.lightGray
         contentView.showsVerticalScrollIndicator = false
         contentView.showsHorizontalScrollIndicator = false
-        contentView.isScrollEnabled = true
+        contentView.alwaysBounceHorizontal = true
         layer.borderColor = UIColor.black.cgColor
         layer.borderWidth = 1
 
-//        contentView.isPagingEnabled = true
+        contentView.isPagingEnabled = true
         addSubview(segmentedControl)
         addSubview(contentView)
-
+        
+        segmentedControl.addTarget(self, action: #selector(valueChange), for: .valueChanged)
     }
     
     public init(items: [SegmentedControlViewItem] = []) {
@@ -71,23 +74,14 @@ open class SegmentedControlView<SegmentedControlType: SegmentedControl>: UIView 
             .forEach { (index, view) in
                 
             view.frame = CGRect(x: CGFloat(index) * width,
-                                y: segmentedControlHeight,
-                                width: width-100,
+                                y: 0,
+                                width: width,
                                 height: contentViewHeight)
         }
-        print(self.isUserInteractionEnabled)
-        print(contentView.isUserInteractionEnabled)
-        print(contentView.isScrollEnabled)
-        print(contentView.contentSize)
-        print(contentView.frame)
-    }
-    
-    open override func didMoveToSuperview() {
-        super.didMoveToSuperview()
-        print(self.isUserInteractionEnabled)
-        print(contentView.isUserInteractionEnabled)
-        print(contentView.contentSize)
-        print(contentView.frame)
+
     }
 
+    func valueChange() {
+        print(contentView)
+    }
 }
