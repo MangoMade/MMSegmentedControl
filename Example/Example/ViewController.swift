@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MMSegmentedControl
 
 class ViewController: UIViewController {
     

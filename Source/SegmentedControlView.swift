@@ -9,8 +9,13 @@
 import UIKit
 
 public struct SegmentedControlViewItem {
-    let title: String
-    let view: UIView
+    public let title: String
+    public let view: UIView
+    
+    public init(title: String, view: UIView) {
+        self.title = title
+        self.view  = view
+    }
 }
 
 open class SegmentedControlView<SegmentedControlType: SegmentedControl>: UIView {
@@ -18,9 +23,7 @@ open class SegmentedControlView<SegmentedControlType: SegmentedControl>: UIView 
     // MARK: - Properties
     open var segmentedControl: SegmentedControlType
     
-    private var contentView = UIScrollView()
-    
-    var items: [SegmentedControlViewItem] {
+    public var items: [SegmentedControlViewItem] {
         willSet {
             items.map{$0.view}.forEach{ $0.removeFromSuperview() }
         }
@@ -30,6 +33,8 @@ open class SegmentedControlView<SegmentedControlType: SegmentedControl>: UIView 
             layoutIfNeeded()
         }
     }
+    
+    private var contentView = UIScrollView()
     
     // MARK" - init
     private func commonInit() {
@@ -82,6 +87,6 @@ open class SegmentedControlView<SegmentedControlType: SegmentedControl>: UIView 
     }
 
     func valueChange() {
-        print(contentView)
+//        print(contentView)
     }
 }

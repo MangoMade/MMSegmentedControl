@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  MMSegmentedControl
+//  Example
 //
-//  Created by Aqua on 2017/4/11.
+//  Created by Aqua on 2017/4/20.
 //  Copyright © 2017年 Aqua. All rights reserved.
 //
 

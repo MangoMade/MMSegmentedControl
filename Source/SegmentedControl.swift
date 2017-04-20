@@ -179,9 +179,11 @@ open class SegmentedControl: UIControl {
                                                                    options: [],
                                                                    metrics: nil,
                                                                    views: lineViews))
+        
+        let onePX = 1 / UIScreen.main.scale
         NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[grayLine(onePx)]|",
                                                                    options: [],
-                                                                   metrics: ["onePx": Screen.onePX],
+                                                                   metrics: ["onePx": onePX],
                                                                    views: lineViews))
     }
     

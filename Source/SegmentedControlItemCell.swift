@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SegmentedControlItemCell: UICollectionViewCell {
+internal class SegmentedControlItemCell: UICollectionViewCell {
     
     let titleLabel = UILabel()
     

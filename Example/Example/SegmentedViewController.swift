@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import MMSegmentedControl
 class SegmentedViewController: UIViewController {
 
     private var children = [UIViewController]()
