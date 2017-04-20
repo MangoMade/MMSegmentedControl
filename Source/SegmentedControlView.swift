@@ -44,12 +44,13 @@ open class SegmentedControlView: UIView {
         contentView.showsHorizontalScrollIndicator = false
         contentView.alwaysBounceHorizontal = true
         contentView.isPagingEnabled = true
-//        contentView.delegate = self
+        contentView.delegate = self
+        contentView.alwaysBounceHorizontal = true
         
         addSubview(segmentedControl)
         addSubview(contentView)
         
-        segmentedControl.addTarget(self, action: #selector(valueChange), for: .valueChanged)
+        segmentedControl.addTarget(self, action: #selector(indexChanged(_:)), for: .valueChanged)
     }
     
     public init(items: [SegmentedControlViewItem] = []) {
@@ -85,8 +86,17 @@ open class SegmentedControlView: UIView {
 
     }
 
-    func valueChange() {
+    func indexChanged(_ sender: SegmentedControl) {
+        guard let index = segmentedControl.selectedIndex else { return }
+        let contentOffset = CGPoint(x: CGFloat(index) * bounds.width, y: 0)
+        contentView.setContentOffset(contentOffset, animated: true)
+    }
+}
 
+extension SegmentedControlView: UIScrollViewDelegate {
+    
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        segmentedControl.selectedIndex = Int(scrollView.contentOffset.x / bounds.width)
     }
 }
 
