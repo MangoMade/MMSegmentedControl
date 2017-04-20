@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		525D0C0A1EA8960600FF5844 /* MMSegmentedControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525D0C091EA8960600FF5844 /* MMSegmentedControl.framework */; };
 		52E12D851EA85F7200FD3F81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E12D841EA85F7200FD3F81 /* AppDelegate.swift */; };
 		52E12D8C1EA85F7200FD3F81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52E12D8B1EA85F7200FD3F81 /* Assets.xcassets */; };
 		52E12D8F1EA85F7200FD3F81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52E12D8D1EA85F7200FD3F81 /* LaunchScreen.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		525D0C091EA8960600FF5844 /* MMSegmentedControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMSegmentedControl.framework; path = "../../../../Library/Developer/Xcode/DerivedData/MMSegmentedControl-fvhgsnvtrycvambmpjskiwwykdif/Build/Products/Debug-iphonesimulator/MMSegmentedControl.framework"; sourceTree = "<group>"; };
 		52E12D811EA85F7200FD3F81 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E12D841EA85F7200FD3F81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52E12D8B1EA85F7200FD3F81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -31,17 +33,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				525D0C0A1EA8960600FF5844 /* MMSegmentedControl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		525D0C081EA8960600FF5844 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				525D0C091EA8960600FF5844 /* MMSegmentedControl.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		52E12D781EA85F7200FD3F81 = {
 			isa = PBXGroup;
 			children = (
 				52E12D831EA85F7200FD3F81 /* Example */,
 				52E12D821EA85F7200FD3F81 /* Products */,
+				525D0C081EA8960600FF5844 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -201,7 +213,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -245,7 +257,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

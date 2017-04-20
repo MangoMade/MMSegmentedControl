@@ -6,11 +6,7 @@
 import UIKit
 
 open class SegmentedControl: UIControl {
-    
-    open override class var requiresConstraintBasedLayout: Bool {
-        return true
-    }
-    
+
     // MARK: - public properties
     
     open var itemTitles: [String] = [] {
@@ -36,6 +32,9 @@ open class SegmentedControl: UIControl {
             if let index = newValue {
                 let indexPath = IndexPath(row: index, section: 0)
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+                
+                let animated = underline.bounds.size != .zero
+                moveLineToSelectedCellBottom(animated)
             }
         }
     }
@@ -118,13 +117,27 @@ open class SegmentedControl: UIControl {
         return line
     }()
     
-    // MARK: - private properties
+    // MARK: - Properties for underline
+    
+    public let underline: UIView = {
+        let lineView = UIView()
+        lineView.backgroundColor = Const.defaultSelectedTextColor
+        return lineView
+    }()
+    
+    open var lineHeight: CGFloat = 2 {
+        didSet {
+            moveLineToSelectedCellBottom(false)
+        }
+    }
+    
+    // MARK: - Private properties
     
     fileprivate struct ReuseIdentifier {
         static let cell = "cellReuseIdentifier"
     }
     
-    let collectionView: UICollectionView = {
+    internal let collectionView: UICollectionView = {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -140,7 +153,7 @@ open class SegmentedControl: UIControl {
         return collectionView
     }()
     
-    // MARK: - initlization
+    // MARK: - Initlization
     
     public required init(itemTitles: [String] = []) {
 
@@ -185,6 +198,14 @@ open class SegmentedControl: UIControl {
                                                                    options: [],
                                                                    metrics: ["onePx": onePX],
                                                                    views: lineViews))
+        collectionView.addSubview(underline)
+    }
+    
+    // MARK: - Override 
+    
+    override open func layoutSubviews() {
+        super.layoutSubviews()
+        moveLineToSelectedCellBottom(false)
     }
     
     // MARK: - Private Methods
@@ -203,6 +224,23 @@ open class SegmentedControl: UIControl {
     }
 }
 
+// MARK: - Private methods for underline
+fileprivate extension SegmentedControl {
+    
+    func moveLineToSelectedCellBottom(_ animated: Bool = true) {
+        guard !underline.isHidden && underline.superview != nil else { return }
+        
+        guard let selectedIndex = selectedIndex else { return }
+        let indexPath = IndexPath(row: selectedIndex, section: 0)
+        guard let layout = collectionView.layoutAttributesForItem(at: indexPath) else {
+            return
+        }
+        UIView.animate(withDuration: animated ? 0.25 : 0) {
+            self.underline.center = CGPoint(x: layout.center.x, y: layout.frame.maxY - self.lineHeight / 2)
+            self.underline.bounds = CGRect(x: 0, y: 0, width: layout.bounds.width, height: self.lineHeight)
+        }
+    }
+}
 
 // MARK: - UICollectionViewDataSource
 extension SegmentedControl: UICollectionViewDataSource {

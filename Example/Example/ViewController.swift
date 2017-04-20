@@ -11,8 +11,8 @@ import MMSegmentedControl
 
 class ViewController: UIViewController {
     
-    let bar = UnderlineSegmentedControl(itemTitles: ["1", "22", "333", "4444", "55555", "666666", "7777777", "88888888", ])
-    let lineBar = UnderlineSegmentedControl()
+    let bar = SegmentedControl(itemTitles: ["1", "22", "333", "4444", "55555", "666666", "7777777", "88888888", ])
+    let lineBar = SegmentedControl()
     
     let button = UIButton(type: .system)
     
@@ -22,6 +22,7 @@ class ViewController: UIViewController {
         automaticallyAdjustsScrollViewInsets = false
         let barViews = ["bar": bar]
         bar.translatesAutoresizingMaskIntoConstraints = false
+        bar.underline.isHidden = true
         view.addSubview(bar)
         NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[bar]|",
                                                                    options: [],

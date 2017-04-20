@@ -9,6 +9,7 @@
 import UIKit
 
 public struct SegmentedControlViewItem {
+    
     public let title: String
     public let view: UIView
     
@@ -18,10 +19,10 @@ public struct SegmentedControlViewItem {
     }
 }
 
-open class SegmentedControlView<SegmentedControlType: SegmentedControl>: UIView {
+open class SegmentedControlView: UIView {
 
     // MARK: - Properties
-    open var segmentedControl: SegmentedControlType
+    open let segmentedControl = SegmentedControl()
     
     public var items: [SegmentedControlViewItem] {
         willSet {
@@ -42,10 +43,9 @@ open class SegmentedControlView<SegmentedControlType: SegmentedControl>: UIView 
         contentView.showsVerticalScrollIndicator = false
         contentView.showsHorizontalScrollIndicator = false
         contentView.alwaysBounceHorizontal = true
-        layer.borderColor = UIColor.black.cgColor
-        layer.borderWidth = 1
-
         contentView.isPagingEnabled = true
+//        contentView.delegate = self
+        
         addSubview(segmentedControl)
         addSubview(contentView)
         
@@ -54,7 +54,6 @@ open class SegmentedControlView<SegmentedControlType: SegmentedControl>: UIView 
     
     public init(items: [SegmentedControlViewItem] = []) {
         self.items = items
-        segmentedControl = SegmentedControlType.init()
         super.init(frame: .zero)
         commonInit()
     }
@@ -87,6 +86,7 @@ open class SegmentedControlView<SegmentedControlType: SegmentedControl>: UIView 
     }
 
     func valueChange() {
-//        print(contentView)
+
     }
 }
+

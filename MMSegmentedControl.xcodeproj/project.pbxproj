@@ -12,7 +12,6 @@
 		52E12D741EA85F0F00FD3F81 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E12D6E1EA85F0F00FD3F81 /* SegmentedControl.swift */; };
 		52E12D751EA85F0F00FD3F81 /* SegmentedControlItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E12D6F1EA85F0F00FD3F81 /* SegmentedControlItemCell.swift */; };
 		52E12D761EA85F0F00FD3F81 /* SegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E12D701EA85F0F00FD3F81 /* SegmentedControlView.swift */; };
-		52E12D771EA85F0F00FD3F81 /* UnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E12D711EA85F0F00FD3F81 /* UnderlineSegmentedControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +22,6 @@
 		52E12D6E1EA85F0F00FD3F81 /* SegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		52E12D6F1EA85F0F00FD3F81 /* SegmentedControlItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlItemCell.swift; sourceTree = "<group>"; };
 		52E12D701EA85F0F00FD3F81 /* SegmentedControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlView.swift; sourceTree = "<group>"; };
-		52E12D711EA85F0F00FD3F81 /* UnderlineSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +58,6 @@
 				52E12D6E1EA85F0F00FD3F81 /* SegmentedControl.swift */,
 				52E12D6F1EA85F0F00FD3F81 /* SegmentedControlItemCell.swift */,
 				52E12D701EA85F0F00FD3F81 /* SegmentedControlView.swift */,
-				52E12D711EA85F0F00FD3F81 /* UnderlineSegmentedControl.swift */,
 				52E12D6B1EA85EBA00FD3F81 /* Supporting Files */,
 			);
 			path = Source;
@@ -157,7 +154,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				52E12D761EA85F0F00FD3F81 /* SegmentedControlView.swift in Sources */,
-				52E12D771EA85F0F00FD3F81 /* UnderlineSegmentedControl.swift in Sources */,
 				52E12D721EA85F0F00FD3F81 /* Const.swift in Sources */,
 				52E12D751EA85F0F00FD3F81 /* SegmentedControlItemCell.swift in Sources */,
 				52E12D741EA85F0F00FD3F81 /* SegmentedControl.swift in Sources */,

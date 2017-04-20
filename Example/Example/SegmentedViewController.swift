@@ -26,7 +26,7 @@ class SegmentedViewController: UIViewController {
         
         view.addSubview(segmentedView)
         
-        let titles = ["1", "22", "333", "4444", "55555", "123", "11233", "234234"]
+        let titles = ["1", "22", "333", "4444", "55555", "123", "11233"]
         
         let colors = [UIColor.red,
                       UIColor.blue,
