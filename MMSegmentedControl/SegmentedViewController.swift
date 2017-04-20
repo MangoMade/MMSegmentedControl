@@ -26,8 +26,16 @@ class SegmentedViewController: UIViewController {
         
         view.addSubview(segmentedView)
         
-        let titles = ["1", "22", "333", "4444", "55555",]
-        let colors = [UIColor.red, UIColor.blue, UIColor.green, UIColor.lightGray, UIColor.yellow]
+        let titles = ["1", "22", "333", "4444", "55555", "123", "11233", "234234"]
+        
+        let colors = [UIColor.red,
+                      UIColor.blue,
+                      UIColor.green,
+                      UIColor.lightGray,
+                      UIColor.yellow,
+                      UIColor.green,
+                      UIColor.lightGray,
+                      UIColor.yellow]
         
         let items = titles.enumerated().map { (index, title) -> SegmentedControlViewItem in
             let viewController = UIViewController()
@@ -38,6 +46,8 @@ class SegmentedViewController: UIViewController {
             return SegmentedControlViewItem(title: title, view: viewController.view)
         }
         segmentedView.items = items
+        
+        segmentedView.segmentedControl.rightMargin = 100
     }
 
 
