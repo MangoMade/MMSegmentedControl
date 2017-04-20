@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "MMSegmentedControl"
-  s.version      = "0.0.3"
+  s.version      = "0.0.4"
   s.summary      = "Just a customizable segmented control!"
 
   s.description  = <<-DESC
@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/MangoMade/MMSegmentedControl.git", :tag => "#{s.version}" }
 
-  s.source_files  = "MMSegmentedControl/Source"
+  s.source_files  = "Source/*.swift"
 
   s.requires_arc = true
 
