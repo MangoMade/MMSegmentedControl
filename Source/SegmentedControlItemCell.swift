@@ -49,9 +49,18 @@ internal class SegmentedControlItemCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
+//            UIView.animate(withDuration: 0.15, animations: {
+//                self.titleLabel.transform = self.isSelected ? CGAffineTransform.identity : self.textTransform
+//                self.titleLabel.textColor = self.isSelected ? self.selectedTextColor : self.normalTextColor
+//            })
+        }
+    }
+    
+    var isChoosing: Bool = false {
+        didSet {
             UIView.animate(withDuration: 0.15, animations: {
-                self.titleLabel.transform = self.isSelected ? CGAffineTransform.identity : self.textTransform
-                self.titleLabel.textColor = self.isSelected ? self.selectedTextColor : self.normalTextColor
+                self.titleLabel.transform = self.isChoosing ? CGAffineTransform.identity : self.textTransform
+                self.titleLabel.textColor = self.isChoosing ? self.selectedTextColor : self.normalTextColor
             })
         }
     }

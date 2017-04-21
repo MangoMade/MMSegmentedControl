@@ -20,7 +20,8 @@ open class SegmentedControl: UIControl {
         }
     }
     
-    open var selectedIndex: Int? {
+    open var selectedIndex: Int = 0 {
+        /*
         get {
             let selectedIndexPaths = collectionView.indexPathsForSelectedItems
             if selectedIndexPaths?.count ?? 0 > 0 {
@@ -30,12 +31,45 @@ open class SegmentedControl: UIControl {
         }
         set {
             if let index = newValue {
+                let selectedIndexPaths = collectionView.indexPathsForSelectedItems
+                if selectedIndexPaths?.count ?? 0 > 0 {
+                    let selectedIndexPath = selectedIndexPaths![0]
+                    if let cell = collectionView.cellForItem(at: selectedIndexPath) as? SegmentedControlItemCell {
+                        cell.isChoosing = false
+                    }
+                }
+                
                 let indexPath = IndexPath(row: index, section: 0)
                 collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
                 
                 let animated = underline.bounds.size != .zero
                 moveLineToSelectedCellBottom(animated)
+                guard let cell = collectionView.cellForItem(at: indexPath) as? SegmentedControlItemCell else {
+                    return
+                }
+                cell.isChoosing = true
             }
+        }
+         */
+        
+        willSet {
+            let indexPath = IndexPath(row: selectedIndex, section: 0)
+            guard let cell = collectionView.cellForItem(at: indexPath) as? SegmentedControlItemCell else {
+                return
+            }
+            cell.isChoosing = false
+        }
+        
+        didSet {
+            let indexPath = IndexPath(row: selectedIndex, section: 0)
+            guard let cell = collectionView.cellForItem(at: indexPath) as? SegmentedControlItemCell else {
+                return
+            }
+            cell.isChoosing = true
+
+            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+            let animated = underline.bounds.size != .zero
+            moveLineToSelectedCellBottom(animated)
         }
     }
     
@@ -153,6 +187,8 @@ open class SegmentedControl: UIControl {
         return collectionView
     }()
     
+//    fileprivate var isAnimating = false
+    
     // MARK: - Initlization
     
     public required init(itemTitles: [String] = []) {
@@ -199,7 +235,7 @@ open class SegmentedControl: UIControl {
                                                                    metrics: ["onePx": onePX],
                                                                    views: lineViews))
 
-        insertSubview(underline, belowSubview: collectionView)
+        collectionView.addSubview(underline)
     }
     
     // MARK: - Override 
@@ -219,10 +255,7 @@ open class SegmentedControl: UIControl {
     }
     
     private func updateCollectionViewLayout() {
-        let index = selectedIndex
         collectionView.reloadData()
-        print(collectionView.visibleCells.count)
-        selectedIndex = index
     }
 }
 
@@ -231,14 +264,15 @@ fileprivate extension SegmentedControl {
     
     func moveLineToSelectedCellBottom(_ animated: Bool = true) {
         guard !underline.isHidden && underline.superview != nil else { return }
-        
-        guard let selectedIndex = selectedIndex else { return }
+
         let indexPath = IndexPath(row: selectedIndex, section: 0)
+
         guard let layout = collectionView.layoutAttributesForItem(at: indexPath) else {
             return
         }
         UIView.animate(withDuration: animated ? 0.25 : 0) {
             let centerY = self.lineHeight < layout.frame.maxY ? layout.frame.maxY - self.lineHeight / 2 : layout.center.y
+
             self.underline.center = CGPoint(x: layout.center.x, y: centerY)
             self.underline.bounds = CGRect(x: 0, y: 0, width: layout.bounds.width, height: self.lineHeight)
         }
@@ -262,6 +296,10 @@ extension SegmentedControl: UICollectionViewDataSource {
         cell.selectedTextColor = selectedTextColor
         cell.fontSize = fontSize
         cell.selectedFontSize = selectedFontSize
+        cell.isChoosing = indexPath.row == selectedIndex
+
+        collectionView.sendSubview(toBack: underline) // 想把underline放到collectionView的最底层，还没想到什么好办法
+
         return cell
     }
 }
@@ -311,10 +349,14 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
 extension SegmentedControl: UICollectionViewDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+
         selectedIndex = indexPath.row
         sendActions(for: .valueChanged)
     }
+    
+//    public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+//        return !isAnimating
+//    }
 }
 
 private extension String {

@@ -86,7 +86,8 @@ open class SegmentedControlView: UIView {
     }
 
     func indexChanged(_ sender: SegmentedControl) {
-        guard let index = segmentedControl.selectedIndex else { return }
+//        guard let index = segmentedControl.selectedIndex else { return }
+        let index = segmentedControl.selectedIndex
         let contentOffset = CGPoint(x: CGFloat(index) * bounds.width, y: 0)
         contentView.setContentOffset(contentOffset, animated: true)
     }

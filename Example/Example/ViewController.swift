@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         automaticallyAdjustsScrollViewInsets = false
         let barViews = ["bar": bar]
         bar.translatesAutoresizingMaskIntoConstraints = false
-        bar.underline.isHidden = true
+//        bar.underline.isHidden = true
         view.addSubview(bar)
         NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[bar]|",
                                                                    options: [],
@@ -44,7 +44,6 @@ class ViewController: UIViewController {
         lineBar.lineHeight = lineBarHeight + 2
         lineBar.underline.layer.cornerRadius = lineBarHeight / 2
         lineBar.layer.cornerRadius = lineBarHeight / 2
-//        lineBar.clipsToBounds = true
         lineBar.layer.borderColor = UIColor.black.cgColor
         lineBar.layer.borderWidth = 1
         
@@ -71,11 +70,12 @@ class ViewController: UIViewController {
     
 
     func change(sender: UIButton) {
-        if lineBar.itemMargin == 50 {
-            lineBar.itemMargin = 100
-        } else {
-            lineBar.itemMargin = 50
-        }
+//        if lineBar.itemMargin == 50 {
+//            lineBar.itemMargin = 100
+//        } else {
+//            lineBar.itemMargin = 50
+//        }
+        lineBar.selectedIndex = 1
     }
     
     func push(sender: UIButton) {
