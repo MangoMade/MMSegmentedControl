@@ -199,7 +199,7 @@ open class SegmentedControl: UIControl {
                                                                    metrics: ["onePx": onePX],
                                                                    views: lineViews))
 
-        insertSubview(underline, at: 0)
+        insertSubview(underline, belowSubview: collectionView)
     }
     
     // MARK: - Override 
@@ -220,7 +220,8 @@ open class SegmentedControl: UIControl {
     
     private func updateCollectionViewLayout() {
         let index = selectedIndex
-        collectionView.reloadSections(IndexSet(integer: 0))
+        collectionView.reloadData()
+        print(collectionView.visibleCells.count)
         selectedIndex = index
     }
 }
@@ -237,7 +238,8 @@ fileprivate extension SegmentedControl {
             return
         }
         UIView.animate(withDuration: animated ? 0.25 : 0) {
-            self.underline.center = CGPoint(x: layout.center.x, y: layout.frame.maxY - self.lineHeight / 2)
+            let centerY = self.lineHeight < layout.frame.maxY ? layout.frame.maxY - self.lineHeight / 2 : layout.center.y
+            self.underline.center = CGPoint(x: layout.center.x, y: centerY)
             self.underline.bounds = CGRect(x: 0, y: 0, width: layout.bounds.width, height: self.lineHeight)
         }
     }

@@ -18,7 +18,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = UIColor.white
+        
         automaticallyAdjustsScrollViewInsets = false
         let barViews = ["bar": bar]
         bar.translatesAutoresizingMaskIntoConstraints = false
@@ -40,10 +41,10 @@ class ViewController: UIViewController {
         lineBar.itemMargin = 0
         lineBar.leftMargin = 0
         lineBar.rightMargin = 0
-        lineBar.lineHeight = lineBarHeight
+        lineBar.lineHeight = lineBarHeight + 2
         lineBar.underline.layer.cornerRadius = lineBarHeight / 2
         lineBar.layer.cornerRadius = lineBarHeight / 2
-        lineBar.clipsToBounds = true
+//        lineBar.clipsToBounds = true
         lineBar.layer.borderColor = UIColor.black.cgColor
         lineBar.layer.borderWidth = 1
         
@@ -82,6 +83,6 @@ class ViewController: UIViewController {
     }
     
     func goToNewsViewController(_ sender: UIButton) {
-        navigationController?.pushViewController(NewsViewController(), animated: true)
+        navigationController?.pushViewController(ViewController(), animated: true)
     }
 }

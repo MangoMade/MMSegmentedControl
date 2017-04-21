@@ -60,8 +60,8 @@
 				52E12D6E1EA85F0F00FD3F81 /* SegmentedControl.swift */,
 				52E12D6F1EA85F0F00FD3F81 /* SegmentedControlItemCell.swift */,
 				52E12D701EA85F0F00FD3F81 /* SegmentedControlView.swift */,
-				52E12D6B1EA85EBA00FD3F81 /* Supporting Files */,
 				52CF37951EA8C72800806700 /* NewsView.swift */,
+				52E12D6B1EA85EBA00FD3F81 /* Supporting Files */,
 			);
 			path = Source;
 			sourceTree = "<group>";
