@@ -54,7 +54,7 @@ open class SegmentedControl: UIControl {
         }
     }
     
-    open var textMargin: CGFloat    = 0 {
+    open var itemMargin: CGFloat    = 0 {
         didSet {
             updateCollectionViewLayout()
         }
@@ -198,7 +198,8 @@ open class SegmentedControl: UIControl {
                                                                    options: [],
                                                                    metrics: ["onePx": onePX],
                                                                    views: lineViews))
-        collectionView.addSubview(underline)
+
+        insertSubview(underline, at: 0)
     }
     
     // MARK: - Override 
@@ -284,7 +285,7 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
             
         } else {
             let countFloat = CGFloat(itemTitles.count)
-            let contentWidth = bounds.width - leftMargin - rightMargin - (countFloat - 1) * textMargin
+            let contentWidth = bounds.width - leftMargin - rightMargin - (countFloat - 1) * itemMargin
             width = contentWidth / countFloat
         }
         return CGSize(width: width, height: bounds.height)
@@ -300,7 +301,7 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView,
                                layout collectionViewLayout: UICollectionViewLayout,
                                minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return textMargin
+        return itemMargin
     }
 }
 

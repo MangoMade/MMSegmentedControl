@@ -34,11 +34,20 @@ class ViewController: UIViewController {
                                                                    views: barViews))
       
         lineBar.itemTitles = ["111", "222", ]
-        lineBar.frame = CGRect(x: 0, y: 200, width: Screen.width, height: 50)
+        let lineBarHeight: CGFloat = 50
+        lineBar.frame = CGRect(x: 70, y: 200, width: Screen.width - 140, height: lineBarHeight)
         lineBar.isScrollEnabled = false
-        lineBar.textMargin = 50
-        lineBar.leftMargin = 50
-        lineBar.rightMargin = 50
+        lineBar.itemMargin = 0
+        lineBar.leftMargin = 0
+        lineBar.rightMargin = 0
+        lineBar.lineHeight = lineBarHeight
+        lineBar.underline.layer.cornerRadius = lineBarHeight / 2
+        lineBar.layer.cornerRadius = lineBarHeight / 2
+        lineBar.clipsToBounds = true
+        lineBar.layer.borderColor = UIColor.black.cgColor
+        lineBar.layer.borderWidth = 1
+        
+        lineBar.selectedTextColor = UIColor.white
         view.addSubview(lineBar)
         
         button.setTitle("change", for: .normal)
@@ -61,10 +70,10 @@ class ViewController: UIViewController {
     
 
     func change(sender: UIButton) {
-        if lineBar.textMargin == 50 {
-            lineBar.textMargin = 100
+        if lineBar.itemMargin == 50 {
+            lineBar.itemMargin = 100
         } else {
-            lineBar.textMargin = 50
+            lineBar.itemMargin = 50
         }
     }
     
