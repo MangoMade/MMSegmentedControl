@@ -57,7 +57,7 @@ open class SegmentedControl: UIControl {
             guard let cell = collectionView.cellForItem(at: indexPath) as? SegmentedControlItemCell else {
                 return
             }
-            cell.isChoosing = false
+            cell.set(isChoosing: false, completion: nil)
         }
         
         didSet {
@@ -65,11 +65,15 @@ open class SegmentedControl: UIControl {
             guard let cell = collectionView.cellForItem(at: indexPath) as? SegmentedControlItemCell else {
                 return
             }
-            cell.isChoosing = true
+            cell.set(isChoosing: true) { _ in
+                self.isUserInteractionEnabled = true
+            }
 
             collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
             let animated = underline.bounds.size != .zero
             moveLineToSelectedCellBottom(animated)
+            
+            isUserInteractionEnabled = false
         }
     }
     
@@ -186,9 +190,7 @@ open class SegmentedControl: UIControl {
 
         return collectionView
     }()
-    
-//    fileprivate var isAnimating = false
-    
+
     // MARK: - Initlization
     
     public required init(itemTitles: [String] = []) {
@@ -349,14 +351,11 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
 extension SegmentedControl: UICollectionViewDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
-        selectedIndex = indexPath.row
-        sendActions(for: .valueChanged)
+        if selectedIndex != indexPath.row {
+            selectedIndex = indexPath.row
+            sendActions(for: .valueChanged)
+        }
     }
-    
-//    public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-//        return !isAnimating
-//    }
 }
 
 private extension String {

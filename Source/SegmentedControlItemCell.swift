@@ -46,24 +46,21 @@ internal class SegmentedControlItemCell: UICollectionViewCell {
             titleLabel.transform = isSelected ? .identity : textTransform
         }
     }
-    
-    override var isSelected: Bool {
-        didSet {
-//            UIView.animate(withDuration: 0.15, animations: {
-//                self.titleLabel.transform = self.isSelected ? CGAffineTransform.identity : self.textTransform
-//                self.titleLabel.textColor = self.isSelected ? self.selectedTextColor : self.normalTextColor
-//            })
-        }
-    }
-    
+
     var isChoosing: Bool = false {
         didSet {
-            UIView.animate(withDuration: 0.15, animations: {
-                self.titleLabel.transform = self.isChoosing ? CGAffineTransform.identity : self.textTransform
-                self.titleLabel.textColor = self.isChoosing ? self.selectedTextColor : self.normalTextColor
-            })
+
         }
     }
+    
+    func set(isChoosing: Bool, animated: Bool = true, completion: ((Bool) -> Void)?) {
+        self.isChoosing = isChoosing
+        UIView.animate(withDuration: animated ? 0.15 : 0, animations: { 
+            self.titleLabel.transform = self.isChoosing ? CGAffineTransform.identity : self.textTransform
+            self.titleLabel.textColor = self.isChoosing ? self.selectedTextColor : self.normalTextColor
+        }, completion: completion)
+    }
+    
     
     override init(frame: CGRect) {
         let scale = self.selectedFontSize / self.fontSize
