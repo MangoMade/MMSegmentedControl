@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		525D0C0A1EA8960600FF5844 /* MMSegmentedControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525D0C091EA8960600FF5844 /* MMSegmentedControl.framework */; };
+		52CF37981EA8C76A00806700 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CF37971EA8C76A00806700 /* NewsViewController.swift */; };
 		52E12D851EA85F7200FD3F81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E12D841EA85F7200FD3F81 /* AppDelegate.swift */; };
 		52E12D8C1EA85F7200FD3F81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52E12D8B1EA85F7200FD3F81 /* Assets.xcassets */; };
 		52E12D8F1EA85F7200FD3F81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52E12D8D1EA85F7200FD3F81 /* LaunchScreen.storyboard */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		525D0C091EA8960600FF5844 /* MMSegmentedControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMSegmentedControl.framework; path = "../../../../Library/Developer/Xcode/DerivedData/MMSegmentedControl-fvhgsnvtrycvambmpjskiwwykdif/Build/Products/Debug-iphonesimulator/MMSegmentedControl.framework"; sourceTree = "<group>"; };
+		52CF37971EA8C76A00806700 /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		52E12D811EA85F7200FD3F81 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E12D841EA85F7200FD3F81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52E12D8B1EA85F7200FD3F81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				52E12D841EA85F7200FD3F81 /* AppDelegate.swift */,
 				52E12D961EA8605A00FD3F81 /* SegmentedViewController.swift */,
 				52E12D971EA8605A00FD3F81 /* ViewController.swift */,
+				52CF37971EA8C76A00806700 /* NewsViewController.swift */,
 				52E12D9A1EA8610200FD3F81 /* Screen.swift */,
 				52E12D8B1EA85F7200FD3F81 /* Assets.xcassets */,
 				52E12D8D1EA85F7200FD3F81 /* LaunchScreen.storyboard */,
@@ -154,6 +157,7 @@
 				52E12D991EA8605A00FD3F81 /* ViewController.swift in Sources */,
 				52E12D851EA85F7200FD3F81 /* AppDelegate.swift in Sources */,
 				52E12D981EA8605A00FD3F81 /* SegmentedViewController.swift in Sources */,
+				52CF37981EA8C76A00806700 /* NewsViewController.swift in Sources */,
 				52E12D9B1EA8610200FD3F81 /* Screen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

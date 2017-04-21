@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52CF37961EA8C72800806700 /* NewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CF37951EA8C72800806700 /* NewsView.swift */; };
 		52E12D651EA85E4700FD3F81 /* MMSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 52E12D631EA85E4700FD3F81 /* MMSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		52E12D721EA85F0F00FD3F81 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E12D6C1EA85F0F00FD3F81 /* Const.swift */; };
 		52E12D741EA85F0F00FD3F81 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E12D6E1EA85F0F00FD3F81 /* SegmentedControl.swift */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		52CF37951EA8C72800806700 /* NewsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsView.swift; sourceTree = "<group>"; };
 		52E12D601EA85E4700FD3F81 /* MMSegmentedControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MMSegmentedControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E12D631EA85E4700FD3F81 /* MMSegmentedControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMSegmentedControl.h; sourceTree = "<group>"; };
 		52E12D641EA85E4700FD3F81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				52E12D6F1EA85F0F00FD3F81 /* SegmentedControlItemCell.swift */,
 				52E12D701EA85F0F00FD3F81 /* SegmentedControlView.swift */,
 				52E12D6B1EA85EBA00FD3F81 /* Supporting Files */,
+				52CF37951EA8C72800806700 /* NewsView.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 				52E12D761EA85F0F00FD3F81 /* SegmentedControlView.swift in Sources */,
 				52E12D721EA85F0F00FD3F81 /* Const.swift in Sources */,
 				52E12D751EA85F0F00FD3F81 /* SegmentedControlItemCell.swift in Sources */,
+				52CF37961EA8C72800806700 /* NewsView.swift in Sources */,
 				52E12D741EA85F0F00FD3F81 /* SegmentedControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

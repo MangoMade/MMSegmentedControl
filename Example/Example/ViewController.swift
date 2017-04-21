@@ -51,6 +51,12 @@ class ViewController: UIViewController {
         pushButton.addTarget(self, action: #selector(push(sender:)), for: .touchUpInside)
         pushButton.frame = CGRect(x: 100, y: 400, width: 100, height: 50)
         view.addSubview(pushButton)
+        
+        let newsButton = UIButton(type: .system)
+        newsButton.setTitle("news", for: .normal)
+        newsButton.addTarget(self, action: #selector(goToNewsViewController(_:)), for: .touchUpInside)
+        newsButton.frame = CGRect(x: 100, y: 500, width: 100, height: 50)
+        view.addSubview(newsButton)
     }
     
 
@@ -64,5 +70,9 @@ class ViewController: UIViewController {
     
     func push(sender: UIButton) {
         navigationController?.pushViewController(SegmentedViewController(), animated: true)
+    }
+    
+    func goToNewsViewController(_ sender: UIButton) {
+        navigationController?.pushViewController(NewsViewController(), animated: true)
     }
 }

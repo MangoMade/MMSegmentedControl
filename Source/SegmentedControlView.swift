@@ -64,7 +64,6 @@ open class SegmentedControlView: UIView {
     }
     
     open override func layoutSubviews() {
-        super.layoutSubviews()
         
         let width = bounds.width
         let segmentedControlHeight: CGFloat = 50
@@ -83,7 +82,7 @@ open class SegmentedControlView: UIView {
                                 width: width,
                                 height: contentViewHeight)
         }
-
+        super.layoutSubviews()
     }
 
     func indexChanged(_ sender: SegmentedControl) {
