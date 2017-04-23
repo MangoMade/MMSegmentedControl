@@ -298,7 +298,7 @@ extension SegmentedControl: UICollectionViewDataSource {
         cell.selectedTextColor = selectedTextColor
         cell.fontSize = fontSize
         cell.selectedFontSize = selectedFontSize
-        cell.isChoosing = indexPath.row == selectedIndex
+        cell.set(isChoosing: indexPath.row == selectedIndex, animated: false, completion: nil)
 
         collectionView.sendSubview(toBack: underline) // 想把underline放到collectionView的最底层，还没想到什么好办法
 

@@ -47,11 +47,7 @@ internal class SegmentedControlItemCell: UICollectionViewCell {
         }
     }
 
-    var isChoosing: Bool = false {
-        didSet {
-
-        }
-    }
+    var isChoosing: Bool = false 
     
     func set(isChoosing: Bool, animated: Bool = true, completion: ((Bool) -> Void)?) {
         self.isChoosing = isChoosing
