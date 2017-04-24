@@ -21,36 +21,6 @@ open class SegmentedControl: UIControl {
     }
     
     open var selectedIndex: Int = 0 {
-        /*
-        get {
-            let selectedIndexPaths = collectionView.indexPathsForSelectedItems
-            if selectedIndexPaths?.count ?? 0 > 0 {
-                return selectedIndexPaths![0].row
-            }
-            return nil
-        }
-        set {
-            if let index = newValue {
-                let selectedIndexPaths = collectionView.indexPathsForSelectedItems
-                if selectedIndexPaths?.count ?? 0 > 0 {
-                    let selectedIndexPath = selectedIndexPaths![0]
-                    if let cell = collectionView.cellForItem(at: selectedIndexPath) as? SegmentedControlItemCell {
-                        cell.isChoosing = false
-                    }
-                }
-                
-                let indexPath = IndexPath(row: index, section: 0)
-                collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
-                
-                let animated = underline.bounds.size != .zero
-                moveLineToSelectedCellBottom(animated)
-                guard let cell = collectionView.cellForItem(at: indexPath) as? SegmentedControlItemCell else {
-                    return
-                }
-                cell.isChoosing = true
-            }
-        }
-         */
         
         willSet {
             let indexPath = IndexPath(row: selectedIndex, section: 0)
@@ -268,7 +238,6 @@ fileprivate extension SegmentedControl {
         guard !underline.isHidden && underline.superview != nil else { return }
 
         let indexPath = IndexPath(row: selectedIndex, section: 0)
-
         guard let layout = collectionView.layoutAttributesForItem(at: indexPath) else {
             return
         }

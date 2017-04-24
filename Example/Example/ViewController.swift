@@ -83,6 +83,6 @@ class ViewController: UIViewController {
     }
     
     func goToNewsViewController(_ sender: UIButton) {
-        navigationController?.pushViewController(ViewController(), animated: true)
+        navigationController?.pushViewController(NewsViewController(), animated: true)
     }
 }
