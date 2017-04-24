@@ -236,7 +236,8 @@ fileprivate extension SegmentedControl {
     
     func moveLineToSelectedCellBottom(_ animated: Bool = true) {
         guard !underline.isHidden && underline.superview != nil else { return }
-
+        guard collectionView.numberOfItems(inSection: 0) > 0 else { return }
+        
         let indexPath = IndexPath(row: selectedIndex, section: 0)
         guard let layout = collectionView.layoutAttributesForItem(at: indexPath) else {
             return

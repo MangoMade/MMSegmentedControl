@@ -24,17 +24,17 @@ open class NewsView: UIView {
     }
     
     private func commonInit() {
-        //        addButton.setImage(UIImage(named: "add"), for: .normal)
-//        addButton.setTitle("+", for: .normal)
-//        addButton.layer.shadowColor     = UIColor.white.cgColor
-//        addButton.layer.shadowOffset    = CGSize(width: -8, height: -4)
-//        addButton.layer.shadowOpacity   = 1
-//        addButton.layer.shadowRadius    = 5
-//        addButton.backgroundColor       = UIColor.white
-//        
-//        addButton.translatesAutoresizingMaskIntoConstraints = false
+//                addButton.setImage(UIImage(named: "add"), for: .normal)
+        addButton.setTitle("+", for: .normal)
+        addButton.layer.shadowColor     = UIColor.white.cgColor
+        addButton.layer.shadowOffset    = CGSize(width: -8, height: -4)
+        addButton.layer.shadowOpacity   = 1
+        addButton.layer.shadowRadius    = 5
+        addButton.backgroundColor       = UIColor.white
+        
+        addButton.translatesAutoresizingMaskIntoConstraints = false
         addSubview(segmentedView)
-//        addSubview(addButton)
+        addSubview(addButton)
         
 //        NSLayoutConstraint(item: addButton,
 //                           attribute: .top,
@@ -67,7 +67,8 @@ open class NewsView: UIView {
     }
     
     open override func layoutSubviews() {
-        segmentedView.frame = bounds
+        
         super.layoutSubviews()
+        segmentedView.frame = bounds
     }
 }
