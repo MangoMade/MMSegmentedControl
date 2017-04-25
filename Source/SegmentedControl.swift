@@ -182,31 +182,8 @@ open class SegmentedControl: UIControl {
         collectionView.delegate   = self
         collectionView.register(SegmentedControlItemCell.self, forCellWithReuseIdentifier: ReuseIdentifier.cell)
         addSubview(collectionView)
- 
-//        collectionView.translatesAutoresizingMaskIntoConstraints = false
-//        let views = ["collectionView": collectionView]
-//        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[collectionView]|",
-//                                                                   options: [],
-//                                                                   metrics: nil,
-//                                                                   views: views))
-//        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|[collectionView]|",
-//                                                                   options: [],
-//                                                                   metrics: nil,
-//                                                                   views: views))
 
         addSubview(bottomLine)
-//        let lineViews = ["grayLine": bottomLine]
-//        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[grayLine]|",
-//                                                                   options: [],
-//                                                                   metrics: nil,
-//                                                                   views: lineViews))
-//        
-//        let onePX = 1 / UIScreen.main.scale
-//        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[grayLine(onePx)]|",
-//                                                                   options: [],
-//                                                                   metrics: ["onePx": onePX],
-//                                                                   views: lineViews))
-
         collectionView.addSubview(underline)
     }
     
@@ -215,7 +192,7 @@ open class SegmentedControl: UIControl {
     override open func layoutSubviews() {
         collectionView.frame = bounds
         let onePX = 1 / UIScreen.main.scale
-        bottomLine.frame = CGRect(x: 0, y: bounds.height - onePX, width: bounds.width, height: onePX)
+        bottomLine.frame = CGRect(x: 0, y: bounds.height - onePX, width: bounds.width, height: Const.onePx)
         super.layoutSubviews()
         moveLineToSelectedCellBottom(false)
     }
@@ -331,12 +308,5 @@ extension SegmentedControl: UICollectionViewDelegate {
     }
 }
 
-private extension String {
-    
-    func getTextRectSize(font:UIFont, size:CGSize) -> CGRect {
-        let attributes = [NSFontAttributeName: font]
-        let rect:CGRect = self.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-        return rect;
-    }
-}
+
 

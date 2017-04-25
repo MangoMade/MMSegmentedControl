@@ -46,79 +46,11 @@ open class SegmentedControlView: UIView {
         contentView.isPagingEnabled = true
         contentView.delegate = self
         contentView.alwaysBounceHorizontal = true
-        
-//        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-//        contentView.translatesAutoresizingMaskIntoConstraints = false
+
         addSubview(segmentedControl)
         addSubview(contentView)
         
         segmentedControl.addTarget(self, action: #selector(indexChanged(_:)), for: .valueChanged)
-        
-//        let segmentedControlHeight: CGFloat = 50
-//        NSLayoutConstraint(item: segmentedControl,
-//                           attribute: .left,
-//                           relatedBy: .equal,
-//                           toItem: self,
-//                           attribute: .left,
-//                           multiplier: 1,
-//                           constant: 0).isActive = true
-//        
-//        NSLayoutConstraint(item: segmentedControl,
-//                           attribute: .right,
-//                           relatedBy: .equal,
-//                           toItem: self,
-//                           attribute: .right,
-//                           multiplier: 1,
-//                           constant: 0).isActive = true
-//        
-//        NSLayoutConstraint(item: segmentedControl,
-//                           attribute: .top,
-//                           relatedBy: .equal,
-//                           toItem: self,
-//                           attribute: .top,
-//                           multiplier: 1,
-//                           constant: 0).isActive = true
-//        
-//        NSLayoutConstraint(item: segmentedControl,
-//                           attribute: .height,
-//                           relatedBy: .equal,
-//                           toItem: nil,
-//                           attribute: .notAnAttribute,
-//                           multiplier: 1,
-//                           constant: segmentedControlHeight).isActive = true
-        
-        // content view
-//        NSLayoutConstraint(item: contentView,
-//                           attribute: .left,
-//                           relatedBy: .equal,
-//                           toItem: self,
-//                           attribute: .left,
-//                           multiplier: 1,
-//                           constant: 0).isActive = true
-//        
-//        NSLayoutConstraint(item: contentView,
-//                           attribute: .right,
-//                           relatedBy: .equal,
-//                           toItem: self,
-//                           attribute: .right,
-//                           multiplier: 1,
-//                           constant: 0).isActive = true
-//        
-//        NSLayoutConstraint(item: contentView,
-//                           attribute: .top,
-//                           relatedBy: .equal,
-//                           toItem: segmentedControl,
-//                           attribute: .bottom,
-//                           multiplier: 1,
-//                           constant: 0).isActive = true
-//        
-//        NSLayoutConstraint(item: contentView,
-//                           attribute: .bottom,
-//                           relatedBy: .equal,
-//                           toItem: self,
-//                           attribute: .bottom,
-//                           multiplier: 1,
-//                           constant: 0).isActive = true
     }
     
     public init(items: [SegmentedControlViewItem] = []) {

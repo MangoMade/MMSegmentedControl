@@ -15,4 +15,12 @@ internal struct Const {
     static let defaultTextColor = UIColor.black
     static let defaultSelectedTextColor = UIColor.red
     
+    static let onePx = 1 / UIScreen.main.scale
+    
+    static let tagsWidth: CGFloat = 72
+    static let tagsHeight: CGFloat = 40
+}
+
+internal extension UIFont {
+    static let defaultFont = UIFont.systemFont(ofSize: 14)
 }
