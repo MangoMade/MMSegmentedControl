@@ -183,29 +183,29 @@ open class SegmentedControl: UIControl {
         collectionView.register(SegmentedControlItemCell.self, forCellWithReuseIdentifier: ReuseIdentifier.cell)
         addSubview(collectionView)
  
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        let views = ["collectionView": collectionView]
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[collectionView]|",
-                                                                   options: [],
-                                                                   metrics: nil,
-                                                                   views: views))
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|[collectionView]|",
-                                                                   options: [],
-                                                                   metrics: nil,
-                                                                   views: views))
+//        collectionView.translatesAutoresizingMaskIntoConstraints = false
+//        let views = ["collectionView": collectionView]
+//        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[collectionView]|",
+//                                                                   options: [],
+//                                                                   metrics: nil,
+//                                                                   views: views))
+//        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|[collectionView]|",
+//                                                                   options: [],
+//                                                                   metrics: nil,
+//                                                                   views: views))
 
         addSubview(bottomLine)
-        let lineViews = ["grayLine": bottomLine]
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[grayLine]|",
-                                                                   options: [],
-                                                                   metrics: nil,
-                                                                   views: lineViews))
-        
-        let onePX = 1 / UIScreen.main.scale
-        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[grayLine(onePx)]|",
-                                                                   options: [],
-                                                                   metrics: ["onePx": onePX],
-                                                                   views: lineViews))
+//        let lineViews = ["grayLine": bottomLine]
+//        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[grayLine]|",
+//                                                                   options: [],
+//                                                                   metrics: nil,
+//                                                                   views: lineViews))
+//        
+//        let onePX = 1 / UIScreen.main.scale
+//        NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[grayLine(onePx)]|",
+//                                                                   options: [],
+//                                                                   metrics: ["onePx": onePX],
+//                                                                   views: lineViews))
 
         collectionView.addSubview(underline)
     }
@@ -213,6 +213,9 @@ open class SegmentedControl: UIControl {
     // MARK: - Override 
     
     override open func layoutSubviews() {
+        collectionView.frame = bounds
+        let onePX = 1 / UIScreen.main.scale
+        bottomLine.frame = CGRect(x: 0, y: bounds.height - onePX, width: bounds.width, height: onePX)
         super.layoutSubviews()
         moveLineToSelectedCellBottom(false)
     }

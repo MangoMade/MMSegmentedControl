@@ -30,8 +30,8 @@ open class SegmentedControlView: UIView {
         }
         didSet {
             items.map{$0.view}.forEach(contentView.addSubview)
-            segmentedControl.itemTitles = items.map{ $0.title }
             layoutIfNeeded()
+            segmentedControl.itemTitles = items.map{ $0.title }
         }
     }
     
@@ -47,10 +47,78 @@ open class SegmentedControlView: UIView {
         contentView.delegate = self
         contentView.alwaysBounceHorizontal = true
         
+//        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+//        contentView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(segmentedControl)
         addSubview(contentView)
         
         segmentedControl.addTarget(self, action: #selector(indexChanged(_:)), for: .valueChanged)
+        
+//        let segmentedControlHeight: CGFloat = 50
+//        NSLayoutConstraint(item: segmentedControl,
+//                           attribute: .left,
+//                           relatedBy: .equal,
+//                           toItem: self,
+//                           attribute: .left,
+//                           multiplier: 1,
+//                           constant: 0).isActive = true
+//        
+//        NSLayoutConstraint(item: segmentedControl,
+//                           attribute: .right,
+//                           relatedBy: .equal,
+//                           toItem: self,
+//                           attribute: .right,
+//                           multiplier: 1,
+//                           constant: 0).isActive = true
+//        
+//        NSLayoutConstraint(item: segmentedControl,
+//                           attribute: .top,
+//                           relatedBy: .equal,
+//                           toItem: self,
+//                           attribute: .top,
+//                           multiplier: 1,
+//                           constant: 0).isActive = true
+//        
+//        NSLayoutConstraint(item: segmentedControl,
+//                           attribute: .height,
+//                           relatedBy: .equal,
+//                           toItem: nil,
+//                           attribute: .notAnAttribute,
+//                           multiplier: 1,
+//                           constant: segmentedControlHeight).isActive = true
+        
+        // content view
+//        NSLayoutConstraint(item: contentView,
+//                           attribute: .left,
+//                           relatedBy: .equal,
+//                           toItem: self,
+//                           attribute: .left,
+//                           multiplier: 1,
+//                           constant: 0).isActive = true
+//        
+//        NSLayoutConstraint(item: contentView,
+//                           attribute: .right,
+//                           relatedBy: .equal,
+//                           toItem: self,
+//                           attribute: .right,
+//                           multiplier: 1,
+//                           constant: 0).isActive = true
+//        
+//        NSLayoutConstraint(item: contentView,
+//                           attribute: .top,
+//                           relatedBy: .equal,
+//                           toItem: segmentedControl,
+//                           attribute: .bottom,
+//                           multiplier: 1,
+//                           constant: 0).isActive = true
+//        
+//        NSLayoutConstraint(item: contentView,
+//                           attribute: .bottom,
+//                           relatedBy: .equal,
+//                           toItem: self,
+//                           attribute: .bottom,
+//                           multiplier: 1,
+//                           constant: 0).isActive = true
     }
     
     public init(items: [SegmentedControlViewItem] = []) {
@@ -71,7 +139,7 @@ open class SegmentedControlView: UIView {
         segmentedControl.frame = CGRect(x: 0, y: 0, width: width, height: segmentedControlHeight)
         contentView.frame = CGRect(x: 0, y: segmentedControlHeight, width: width, height: contentViewHeight)
         
-        contentView.contentSize = CGSize(width: width * CGFloat(items.count), height: contentViewHeight)
+        contentView.contentSize = CGSize(width: width * CGFloat(items.count), height: contentView.bounds.height)
         
         items.map{$0.view}
             .enumerated()
@@ -80,7 +148,7 @@ open class SegmentedControlView: UIView {
             view.frame = CGRect(x: CGFloat(index) * width,
                                 y: 0,
                                 width: width,
-                                height: contentViewHeight)
+                                height: contentView.bounds.height)
         }
 
     }

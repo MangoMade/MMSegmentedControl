@@ -17,6 +17,7 @@ class NewsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        automaticallyAdjustsScrollViewInsets = false
         view.backgroundColor = UIColor.white
         
         view.addSubview(newsView)

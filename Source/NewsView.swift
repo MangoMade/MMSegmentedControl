@@ -24,51 +24,28 @@ open class NewsView: UIView {
     }
     
     private func commonInit() {
-//                addButton.setImage(UIImage(named: "add"), for: .normal)
         addButton.setTitle("+", for: .normal)
         addButton.layer.shadowColor     = UIColor.white.cgColor
         addButton.layer.shadowOffset    = CGSize(width: -8, height: -4)
         addButton.layer.shadowOpacity   = 1
         addButton.layer.shadowRadius    = 5
         addButton.backgroundColor       = UIColor.white
-        
-        addButton.translatesAutoresizingMaskIntoConstraints = false
+        segmentedView.segmentedControl.rightMargin = 60
         addSubview(segmentedView)
         addSubview(addButton)
-        
-//        NSLayoutConstraint(item: addButton,
-//                           attribute: .top,
-//                           relatedBy: .equal,
-//                           toItem: segmentedView.segmentedControl,
-//                           attribute: .top,
-//                           multiplier: 1,
-//                           constant: 0).isActive = true
-//        NSLayoutConstraint(item: addButton,
-//                           attribute: .right,
-//                           relatedBy: .equal,
-//                           toItem: segmentedView.segmentedControl,
-//                           attribute: .right,
-//                           multiplier: 1,
-//                           constant: 0).isActive = true
-//        NSLayoutConstraint(item: addButton,
-//                           attribute: .bottom,
-//                           relatedBy: .equal,
-//                           toItem: segmentedView.segmentedControl.bottomLine,
-//                           attribute: .top,
-//                           multiplier: 1,
-//                           constant: 0).isActive = true
-//        NSLayoutConstraint(item: addButton,
-//                           attribute: .width,
-//                           relatedBy: .equal,
-//                           toItem: addButton,
-//                           attribute: .height,
-//                           multiplier: 1,
-//                           constant: 0).isActive = true
+
     }
     
     open override func layoutSubviews() {
         
         super.layoutSubviews()
         segmentedView.frame = bounds
+        
+        let addButtonHeight = segmentedView.segmentedControl.bounds.height - segmentedView.segmentedControl.bottomLine.bounds.height
+        addButton.frame = CGRect(x: bounds.width - addButtonHeight,
+                                 y: 0,
+                                 width: addButtonHeight,
+                                 height: addButtonHeight)
+        
     }
 }

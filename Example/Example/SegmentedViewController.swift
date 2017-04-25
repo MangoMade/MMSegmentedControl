@@ -24,8 +24,6 @@ class SegmentedViewController: UIViewController {
                                      width: Screen.width,
                                      height: Screen.height - Screen.navBarHeight)
         
-        view.addSubview(segmentedView)
-        
         let titles = ["1", "22", "333", "4444", "55555", "123", "11233"]
         
         let colors = [UIColor.red,
@@ -48,6 +46,8 @@ class SegmentedViewController: UIViewController {
         segmentedView.items = items
         
         segmentedView.segmentedControl.rightMargin = 100
+        
+        view.addSubview(segmentedView)
     }
 
 
