@@ -13,7 +13,7 @@ internal struct Const {
     static let defaultFontSize: CGFloat = 15
     static let defaultSelectedFontSize: CGFloat = 18
     static let defaultTextColor = UIColor.black
-    static let defaultSelectedTextColor = UIColor.red
+    static let defaultSelectedTextColor = UIColor(hex: 0xff4f53)
     
     static let onePx = 1 / UIScreen.main.scale
     

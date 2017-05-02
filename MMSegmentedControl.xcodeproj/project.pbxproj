@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5221D76A1EAF2AF000E68915 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5221D7691EAF2AF000E68915 /* Extension.swift */; };
-		5221D76C1EAF2B9B00E68915 /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5221D76B1EAF2B9B00E68915 /* TagsView.swift */; };
-		5221D76E1EAF378700E68915 /* TagsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5221D76D1EAF378700E68915 /* TagsCollectionViewCell.swift */; };
-		5221D7721EAF3F2F00E68915 /* TagsCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5221D7711EAF3F2F00E68915 /* TagsCollectionHeaderView.swift */; };
-		52CF37961EA8C72800806700 /* NewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CF37951EA8C72800806700 /* NewsView.swift */; };
 		52E12D651EA85E4700FD3F81 /* MMSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 52E12D631EA85E4700FD3F81 /* MMSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		52E12D721EA85F0F00FD3F81 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E12D6C1EA85F0F00FD3F81 /* Const.swift */; };
 		52E12D741EA85F0F00FD3F81 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E12D6E1EA85F0F00FD3F81 /* SegmentedControl.swift */; };
@@ -21,10 +17,6 @@
 
 /* Begin PBXFileReference section */
 		5221D7691EAF2AF000E68915 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
-		5221D76B1EAF2B9B00E68915 /* TagsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
-		5221D76D1EAF378700E68915 /* TagsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsCollectionViewCell.swift; sourceTree = "<group>"; };
-		5221D7711EAF3F2F00E68915 /* TagsCollectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsCollectionHeaderView.swift; sourceTree = "<group>"; };
-		52CF37951EA8C72800806700 /* NewsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsView.swift; sourceTree = "<group>"; };
 		52E12D601EA85E4700FD3F81 /* MMSegmentedControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MMSegmentedControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E12D631EA85E4700FD3F81 /* MMSegmentedControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMSegmentedControl.h; sourceTree = "<group>"; };
 		52E12D641EA85E4700FD3F81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -68,12 +60,8 @@
 				52E12D6E1EA85F0F00FD3F81 /* SegmentedControl.swift */,
 				52E12D6F1EA85F0F00FD3F81 /* SegmentedControlItemCell.swift */,
 				52E12D701EA85F0F00FD3F81 /* SegmentedControlView.swift */,
-				52CF37951EA8C72800806700 /* NewsView.swift */,
 				5221D7691EAF2AF000E68915 /* Extension.swift */,
 				52E12D6B1EA85EBA00FD3F81 /* Supporting Files */,
-				5221D76B1EAF2B9B00E68915 /* TagsView.swift */,
-				5221D76D1EAF378700E68915 /* TagsCollectionViewCell.swift */,
-				5221D7711EAF3F2F00E68915 /* TagsCollectionHeaderView.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -170,12 +158,8 @@
 			files = (
 				52E12D761EA85F0F00FD3F81 /* SegmentedControlView.swift in Sources */,
 				52E12D721EA85F0F00FD3F81 /* Const.swift in Sources */,
-				5221D76C1EAF2B9B00E68915 /* TagsView.swift in Sources */,
 				52E12D751EA85F0F00FD3F81 /* SegmentedControlItemCell.swift in Sources */,
 				5221D76A1EAF2AF000E68915 /* Extension.swift in Sources */,
-				5221D76E1EAF378700E68915 /* TagsCollectionViewCell.swift in Sources */,
-				5221D7721EAF3F2F00E68915 /* TagsCollectionHeaderView.swift in Sources */,
-				52CF37961EA8C72800806700 /* NewsView.swift in Sources */,
 				52E12D741EA85F0F00FD3F81 /* SegmentedControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

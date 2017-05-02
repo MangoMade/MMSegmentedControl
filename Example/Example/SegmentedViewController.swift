@@ -24,28 +24,25 @@ class SegmentedViewController: UIViewController {
                                      width: Screen.width,
                                      height: Screen.height - Screen.navBarHeight)
         
-        let titles = ["1", "22", "333", "4444", "55555", "123", "11233"]
-        
-        let colors = [UIColor.red,
-                      UIColor.blue,
-                      UIColor.green,
-                      UIColor.lightGray,
-                      UIColor.yellow,
-                      UIColor.green,
-                      UIColor.lightGray,
-                      UIColor.yellow]
-        
+        let titles = ["推荐", "开庭", "国家情怀", "现场", "315", "财案",  "法老汇",]
+
         let items = titles.enumerated().map { (index, title) -> SegmentedControlViewItem in
             let viewController = UIViewController()
-            viewController.view.backgroundColor = colors[index]
+            viewController.view.backgroundColor = index % 2 == 0 ? UIColor.white : UIColor.lightGray
             addChildViewController(viewController)
             viewController.didMove(toParentViewController: self)
             children.append(viewController)
+            
+            let label = UILabel()
+            label.text = title
+            label.bounds = CGRect(x: 0, y: 0, width: 100, height: 50)
+            label.center = CGPoint(x: Screen.width / 2, y: 100)
+            label.textAlignment = .center
+            viewController.view.addSubview(label)
+            
             return SegmentedControlViewItem(title: title, view: viewController.view)
         }
         segmentedView.items = items
-        
-        segmentedView.segmentedControl.rightMargin = 100
         
         view.addSubview(segmentedView)
     }
