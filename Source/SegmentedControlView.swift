@@ -22,7 +22,7 @@ public struct SegmentedControlViewItem {
 open class SegmentedControlView: UIView {
 
     // MARK: - Properties
-    open let segmentedControl = SegmentedControl()
+    public let segmentedControl = SegmentedControl()
     
     public var items: [SegmentedControlViewItem] {
         willSet {
@@ -60,7 +60,9 @@ open class SegmentedControlView: UIView {
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        self.items = []
+        super.init(coder: aDecoder)
+        commonInit()
     }
     
     open override func layoutSubviews() {
