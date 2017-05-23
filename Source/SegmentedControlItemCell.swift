@@ -66,7 +66,10 @@ internal class SegmentedControlItemCell: UICollectionViewCell {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        let scale = self.selectedFontSize / self.fontSize
+        textTransform = CGAffineTransform(scaleX: scale, y: scale)
+        super.init(coder: aDecoder)
+        commonInit()
     }
     
     private func commonInit() {

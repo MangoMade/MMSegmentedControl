@@ -48,6 +48,11 @@ open class SegmentedControl: UIControl {
         }
     }
     
+    /* 
+     * 这个属性控制 item是否可滑动
+     * 如果为false，则计算item宽度的的时候会忽略 padding和itemWidth
+     * item宽度为控件宽度减去各个Margin的宽度再平分
+     */
     open var isScrollEnabled: Bool {
         set {
             collectionView.isScrollEnabled = newValue
@@ -57,36 +62,61 @@ open class SegmentedControl: UIControl {
         }
     }
     
+    /*
+     * item宽度
+     * 如果设置了这个属性，那么每个item将会等宽，并且忽略padding值
+     * 如果希望item的宽度根据内容自适应，则设置为 小于或等于0
+     * isScrollEnabled为true时有效
+     */
     open var itemWidth: CGFloat     = -1 {
         didSet {
             updateCollectionViewLayout()
         }
     }
     
-    open var itemMargin: CGFloat    = 0 {
-        didSet {
-            updateCollectionViewLayout()
-        }
-    }
-    
-    open var leftMargin: CGFloat    = 12 {
-        didSet {
-            updateCollectionViewLayout()
-        }
-    }
-    
-    open var rightMargin: CGFloat   = 12 {
-        didSet {
-            updateCollectionViewLayout()
-        }
-    }
-    
+    /*
+     * item的边界到字体内容的水平距离，可参考盒子模型
+     * itemWidth大于0时，该属性会被忽略
+     * isScrollEnabled为true时有效
+     */
     open var padding: CGFloat       = 15 {
         didSet {
             updateCollectionViewLayout()
         }
     }
     
+    /*
+     * 两个item之间的距离
+     * 当设置了下划线时，下划线宽度与item宽度相同
+     * 这个属性主要用于控制下划线的显示效果
+     */
+    open var itemMargin: CGFloat    = 0 {
+        didSet {
+            updateCollectionViewLayout()
+        }
+    }
+    
+    /*
+     * 第一个item到控件最左侧的距离
+     */
+    open var leftMargin: CGFloat    = 12 {
+        didSet {
+            updateCollectionViewLayout()
+        }
+    }
+    
+    /*
+     * 最后一个item到控件最右侧的距离
+     */
+    open var rightMargin: CGFloat   = 12 {
+        didSet {
+            updateCollectionViewLayout()
+        }
+    }
+    
+    /*
+     * 选中状态的字体颜色
+     */
     open var selectedTextColor = Const.defaultSelectedTextColor {
         didSet {
             visibleCellsForEach {
@@ -95,6 +125,9 @@ open class SegmentedControl: UIControl {
         }
     }
     
+    /*
+     * 未选中状态的字体颜色
+     */
     open var normalTextColor   = Const.defaultTextColor {
         didSet {
             visibleCellsForEach {
@@ -103,14 +136,9 @@ open class SegmentedControl: UIControl {
         }
     }
     
-    open var fontSize: CGFloat = Const.defaultFontSize {
-        didSet {
-            visibleCellsForEach {
-                $0.fontSize = fontSize
-            }
-        }
-    }
-    
+    /*
+     * 选中状态的字体大小
+     */
     open var selectedFontSize: CGFloat = Const.defaultSelectedFontSize {
         didSet {
             visibleCellsForEach {
@@ -119,7 +147,21 @@ open class SegmentedControl: UIControl {
         }
     }
     
-    open var bottomLine: UIView = {
+    /*
+     * 未选中状态的字体大小
+     */
+    open var fontSize: CGFloat = Const.defaultFontSize {
+        didSet {
+            visibleCellsForEach {
+                $0.fontSize = fontSize
+            }
+        }
+    }
+    
+    /*
+     * 视图最底部细线
+     */
+    public var bottomLine: UIView = {
         let line = UIView()
         line.backgroundColor = UIColor.lightGray
         line.translatesAutoresizingMaskIntoConstraints = false
@@ -128,12 +170,20 @@ open class SegmentedControl: UIControl {
     
     // MARK: - Properties for underline
     
+    /*
+     * 下划线，会随着选中状态移动
+     * itemWidth大于等于0时，其宽度为itemWidth
+     * 否则其宽度为字体大小 加 2 * padding
+     */
     public let underline: UIView = {
         let lineView = UIView()
         lineView.backgroundColor = Const.defaultSelectedTextColor
         return lineView
     }()
     
+    /*
+     * 下划线高度
+     */
     open var lineHeight: CGFloat = 2 {
         didSet {
             moveLineToSelectedCellBottom(false)
@@ -175,7 +225,8 @@ open class SegmentedControl: UIControl {
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        commonInit()
     }
     
     private func commonInit() {
@@ -268,15 +319,17 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
         if isScrollEnabled {
             
             if itemWidth > 0 {
+                // 设置了itemWidth时，等宽
                 width = itemWidth
             } else {
                 let text = itemTitles[indexPath.row]
                 let size = text.getTextRectSize(font: UIFont.systemFont(ofSize: fontSize),
-                                                size: CGSize(width: 100, height: 100)) // 先随便写一个
+                                                size: CGSize(width: CGFloat(Int.max), height: CGFloat(Int.max))) // 先随便写一个
+                // 忽略itemWidth，自适应宽度
                 width = 2 * padding + size.width
             }
-            
         } else {
+            
             let countFloat = CGFloat(itemTitles.count)
             let contentWidth = bounds.width - leftMargin - rightMargin - (countFloat - 1) * itemMargin
             width = contentWidth / countFloat
@@ -311,6 +364,4 @@ extension SegmentedControl: UICollectionViewDelegate {
         }
     }
 }
-
-
 
