@@ -13,15 +13,16 @@ open class SegmentedControl: UIControl {
         didSet {
             collectionView.reloadData()
             collectionView.layoutIfNeeded()
-            if itemTitles.count > 0 {
-                selectedIndex = 0
+            if itemTitles.count < selectedIndex + 1 {
+                selectedIndex = itemTitles.count - 1
                 sendActions(for: .valueChanged)
+            } else {
+                moveLineToSelectedCellBottom()
             }
         }
     }
     
     open var selectedIndex: Int = 0 {
-        
         willSet {
             let indexPath = IndexPath(row: selectedIndex, section: 0)
             guard let cell = collectionView.cellForItem(at: indexPath) as? SegmentedControlItemCell else {
@@ -157,7 +158,7 @@ open class SegmentedControl: UIControl {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = UIColor.clear
-
+        collectionView.alwaysBounceHorizontal = true
         return collectionView
     }()
 
@@ -280,6 +281,9 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
             let contentWidth = bounds.width - leftMargin - rightMargin - (countFloat - 1) * itemMargin
             width = contentWidth / countFloat
         }
+        
+        /// It will crush if size is negative.
+        width = max(width, 0)
         return CGSize(width: width, height: bounds.height)
     }
     
