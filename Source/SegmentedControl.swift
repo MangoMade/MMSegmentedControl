@@ -11,8 +11,9 @@ open class SegmentedControl: UIControl {
     
     open var itemTitles: [String] = [] {
         didSet {
-            collectionView.reloadData()
             collectionView.layoutIfNeeded()
+            collectionView.reloadData()
+            
             if itemTitles.count < selectedIndex + 1 {
                 selectedIndex = itemTitles.count - 1
                 sendActions(for: .valueChanged)
@@ -192,6 +193,8 @@ open class SegmentedControl: UIControl {
     
     // MARK: - Private properties
     
+    fileprivate var maxWidth: CGFloat = 0
+    
     fileprivate struct ReuseIdentifier {
         static let cell = "cellReuseIdentifier"
     }
@@ -200,8 +203,6 @@ open class SegmentedControl: UIControl {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
         
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionView.allowsMultipleSelection = false
@@ -316,8 +317,8 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
                                sizeForItemAt indexPath: IndexPath) -> CGSize
     {
         var width: CGFloat = 0
-        if isScrollEnabled {
-            
+//        if isScrollEnabled {
+        
             if itemWidth > 0 {
                 // 设置了itemWidth时，等宽
                 width = itemWidth
@@ -327,16 +328,26 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
                                                 size: CGSize(width: CGFloat(Int.max), height: CGFloat(Int.max))) // 先随便写一个
                 // 忽略itemWidth，自适应宽度
                 width = 2 * padding + size.width
+                
+                if !isScrollEnabled {
+                    // 不可滑动时，忽略item margin，计算间距时需要使用max width
+                    maxWidth = max(width, maxWidth)
+                }
             }
-        } else {
-            
-            let countFloat = CGFloat(itemTitles.count)
-            let contentWidth = bounds.width - leftMargin - rightMargin - (countFloat - 1) * itemMargin
-            width = contentWidth / countFloat
-        }
+//        } else {
+//            
+//            if itemWidth > 0 {
+//                // 设置了itemWidth时，等宽
+//                width = itemWidth
+//            } else {
+//                let countFloat = CGFloat(itemTitles.count)
+//                let contentWidth = bounds.width - leftMargin - rightMargin - (countFloat - 1) * itemMargin
+//                width = contentWidth / countFloat
+//            }
+//        }
         
         /// It will crush if size is negative.
-        width = max(width, 0)
+        print(CGSize(width: width, height: bounds.height))
         return CGSize(width: width, height: bounds.height)
     }
     
@@ -350,7 +361,23 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView,
                                layout collectionViewLayout: UICollectionViewLayout,
                                minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return itemMargin
+        if isScrollEnabled {
+            return itemMargin
+        } else {
+            let countFloat = CGFloat(itemTitles.count)
+            if itemWidth > 0 {
+                let space = (bounds.width - countFloat * itemWidth - leftMargin - rightMargin)/(countFloat - 1)
+                return space
+            } else {
+                let space = floor((bounds.width - countFloat * maxWidth - leftMargin - rightMargin)/(countFloat-1))
+                print("total \(space * (countFloat-1) + leftMargin + rightMargin + countFloat * maxWidth)")
+                print("bounds.width \(bounds.width)")
+                print("contentSize \(collectionView.contentSize)")
+                maxWidth = 0
+                return space
+                return 20
+            }
+        }
     }
 }
 

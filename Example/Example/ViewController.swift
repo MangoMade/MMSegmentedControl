@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     
     let fixedSegmentedControl: SegmentedControl = {
         let control = SegmentedControl()
-        control.itemTitles          = ["推荐", "开庭", ]
+        control.itemTitles          = ["推荐", "开庭", "国家情怀"]
         
         control.isScrollEnabled     = false
         control.itemMargin  = 50
@@ -43,7 +43,7 @@ class ViewController: UIViewController {
     
     let capsuleSegmentedControl: SegmentedControl = {
         let control = SegmentedControl()
-        control.itemTitles = ["默认", "推荐"]
+        control.itemTitles = ["默认", "推荐", "现场"]
         control.itemMargin  = 0
         control.leftMargin  = 0
         control.rightMargin = 0
@@ -61,6 +61,7 @@ class ViewController: UIViewController {
         control.isScrollEnabled = false
         
         control.frame = CGRect(x: 70, y: 320, width: Screen.width - 140, height: Const.barHeight)
+        control.itemWidth = control.bounds.width / CGFloat(control.itemTitles.count)
         control.lineHeight = Const.barHeight
         control.underline.layer.cornerRadius = Const.barHeight / 2
         control.layer.cornerRadius = Const.barHeight / 2

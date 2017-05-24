@@ -38,6 +38,13 @@ open class SegmentedControlView: UIView {
         }
     }
     
+    public var segmentedControlHeight: CGFloat = 50 {
+        didSet {
+            setNeedsLayout()
+            segmentedControl.collectionView.reloadData()
+        }
+    }
+    
     private var contentView = UIScrollView()
     
     // MARK" - init
@@ -71,11 +78,11 @@ open class SegmentedControlView: UIView {
     open override func layoutSubviews() {
         super.layoutSubviews()
         let width = bounds.width
-        let segmentedControlHeight: CGFloat = 50
         let contentViewHeight = bounds.height - segmentedControlHeight
         segmentedControl.frame = CGRect(x: 0, y: 0, width: width, height: segmentedControlHeight)
         contentView.frame = CGRect(x: 0, y: segmentedControlHeight, width: width, height: contentViewHeight)
         updateContentView()
+        print("layoutSubviews")
     }
     
     private func updateContentView() {

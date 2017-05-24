@@ -45,7 +45,7 @@ class SegmentedViewController: UIViewController {
         segmentedView.segmentedControl.itemMargin  = 50
         segmentedView.segmentedControl.leftMargin  = 30
         segmentedView.segmentedControl.rightMargin = 30
-        
+        segmentedView.segmentedControlHeight = 30
         segmentedView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(segmentedView)
 //        segmentedView.frame = CGRect(x: 0,
@@ -108,6 +108,7 @@ class SegmentedViewController: UIViewController {
     }
     
     func pop(_ sender: UIBarButtonItem) {
-        let _ = segmentedView.items.popLast()
+//        let _ = segmentedView.items.popLast()
+        segmentedView.segmentedControlHeight = 50
     }
 }
