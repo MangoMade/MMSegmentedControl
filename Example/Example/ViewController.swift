@@ -35,9 +35,9 @@ class ViewController: UIViewController {
         control.itemTitles          = ["推荐", "开庭", "国家情怀"]
         
         control.isScrollEnabled     = false
-        control.itemMargin  = 50
-        control.leftMargin  = 30
-        control.rightMargin = 30
+//        control.itemWidth   = 50
+        control.leftMargin  = 10
+        control.rightMargin = 10
         return control
     }()
     

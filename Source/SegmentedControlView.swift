@@ -49,13 +49,11 @@ open class SegmentedControlView: UIView {
     
     // MARK" - init
     private func commonInit() {
-        contentView.backgroundColor = UIColor.lightGray
+        contentView.backgroundColor = .white
         contentView.showsVerticalScrollIndicator = false
         contentView.showsHorizontalScrollIndicator = false
-        contentView.alwaysBounceHorizontal = true
         contentView.isPagingEnabled = true
         contentView.delegate = self
-        contentView.alwaysBounceHorizontal = true
 
         addSubview(segmentedControl)
         addSubview(contentView)
@@ -82,7 +80,6 @@ open class SegmentedControlView: UIView {
         segmentedControl.frame = CGRect(x: 0, y: 0, width: width, height: segmentedControlHeight)
         contentView.frame = CGRect(x: 0, y: segmentedControlHeight, width: width, height: contentViewHeight)
         updateContentView()
-        print("layoutSubviews")
     }
     
     private func updateContentView() {

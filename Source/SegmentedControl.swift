@@ -11,8 +11,10 @@ open class SegmentedControl: UIControl {
     
     open var itemTitles: [String] = [] {
         didSet {
-            collectionView.layoutIfNeeded()
+            
+            collectionView.setNeedsLayout()
             collectionView.reloadData()
+//            setNeedsLayout()
             
             if itemTitles.count < selectedIndex + 1 {
                 selectedIndex = itemTitles.count - 1
@@ -210,6 +212,7 @@ open class SegmentedControl: UIControl {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = UIColor.clear
         collectionView.alwaysBounceHorizontal = true
+        
         return collectionView
     }()
 
@@ -302,10 +305,15 @@ extension SegmentedControl: UICollectionViewDataSource {
         cell.fontSize = fontSize
         cell.selectedFontSize = selectedFontSize
         cell.set(isChoosing: indexPath.row == selectedIndex, animated: false, completion: nil)
-
-        collectionView.sendSubview(toBack: underline) // 想把underline放到collectionView的最底层，还没想到什么好办法
-
+        
         return cell
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if (indexPath.section, indexPath.row) == (0, 0) {
+            /// 想把underline放到collectionView的最底层，还没想到什么好办法
+            collectionView.sendSubview(toBack: underline)
+        }
     }
 }
 
@@ -331,7 +339,8 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
                 
                 if !isScrollEnabled {
                     // 不可滑动时，忽略item margin，计算间距时需要使用max width
-                    maxWidth = max(width, maxWidth)
+//                    maxWidth = max(width, maxWidth)
+                    maxWidth += width
                 }
             }
 //        } else {
@@ -347,7 +356,6 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
 //        }
         
         /// It will crush if size is negative.
-        print(CGSize(width: width, height: bounds.height))
         return CGSize(width: width, height: bounds.height)
     }
     
@@ -358,25 +366,43 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 0, left: leftMargin, bottom: 0, right: rightMargin)
     }
     
-    public func collectionView(_ collectionView: UICollectionView,
-                               layout collectionViewLayout: UICollectionViewLayout,
-                               minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
         if isScrollEnabled {
             return itemMargin
         } else {
+            return 0
             let countFloat = CGFloat(itemTitles.count)
             if itemWidth > 0 {
                 let space = (bounds.width - countFloat * itemWidth - leftMargin - rightMargin)/(countFloat - 1)
+    
                 return space
             } else {
                 let space = floor((bounds.width - countFloat * maxWidth - leftMargin - rightMargin)/(countFloat-1))
-                print("total \(space * (countFloat-1) + leftMargin + rightMargin + countFloat * maxWidth)")
-                print("bounds.width \(bounds.width)")
-                print("contentSize \(collectionView.contentSize)")
                 maxWidth = 0
                 return space
-                return 20
             }
+        }
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+
+        if isScrollEnabled {
+            return 0
+        }
+  
+        let countFloat = CGFloat(itemTitles.count)
+        if itemWidth > 0 {
+            let space = (bounds.width - countFloat * itemWidth - leftMargin - rightMargin)/(countFloat - 1)
+            return space
+        } else {
+            let space = floor((bounds.width - maxWidth - leftMargin - rightMargin)/(countFloat-1))
+            print("bounds \(bounds.width)")
+            print("maxWidth \(maxWidth)")
+            print("space \(space)")
+            print("total \(space*(countFloat-1) + leftMargin + rightMargin + countFloat * maxWidth)")
+            maxWidth = 0
+            return space
         }
     }
 }

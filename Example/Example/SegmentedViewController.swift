@@ -42,10 +42,9 @@ class SegmentedViewController: UIViewController {
         segmentedView.items = items
         
         segmentedView.segmentedControl.isScrollEnabled = false
-        segmentedView.segmentedControl.itemMargin  = 50
         segmentedView.segmentedControl.leftMargin  = 30
         segmentedView.segmentedControl.rightMargin = 30
-        segmentedView.segmentedControlHeight = 30
+   
         segmentedView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(segmentedView)
 //        segmentedView.frame = CGRect(x: 0,
@@ -104,11 +103,11 @@ class SegmentedViewController: UIViewController {
         label.textAlignment = .center
         viewController.view.addSubview(label)
         
-        segmentedView.items.append(SegmentedControlViewItem(title: "New", view: viewController.view))
+        segmentedView.items.append(SegmentedControlViewItem(title: "开庭", view: viewController.view))
     }
     
     func pop(_ sender: UIBarButtonItem) {
-//        let _ = segmentedView.items.popLast()
-        segmentedView.segmentedControlHeight = 50
+        let _ = segmentedView.items.popLast()
+//        segmentedView.segmentedControlHeight = 50
     }
 }
