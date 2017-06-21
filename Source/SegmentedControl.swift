@@ -265,6 +265,10 @@ open class SegmentedControl: UIControl {
     private func updateCollectionViewLayout() {
         collectionView.reloadData()
     }
+    
+    override open var intrinsicContentSize: CGSize {
+        return collectionView.contentSize
+    }
 }
 
 // MARK: - Private methods for underline
