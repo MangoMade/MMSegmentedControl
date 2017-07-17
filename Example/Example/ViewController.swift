@@ -29,7 +29,17 @@ class ViewController: UIViewController {
         control.selectedFontSize = control.fontSize
         return control
     }()
-
+    
+    let fixedSegmentedControl: SegmentedControl = {
+        let control = SegmentedControl()
+        control.itemTitles          = ["推荐", "开庭", "国家情怀"]
+        
+        control.isScrollEnabled     = false
+        control.itemWidth   = 50
+        control.leftMargin  = 10
+        control.rightMargin = 10
+        return control
+    }()
     
     let capsuleSegmentedControl: SegmentedControl = {
         let control = SegmentedControl()
@@ -71,6 +81,8 @@ class ViewController: UIViewController {
         view.addSubview(noUnderlineSegmentedControl)
         
         
+        view.addSubview(fixedSegmentedControl)
+        fixedSegmentedControl.frame = CGRect(x: 50, y: 240, width: Screen.width - 100, height: Const.barHeight)
         view.addSubview(capsuleSegmentedControl)
     
         let pushButton = UIButton(type: .system)

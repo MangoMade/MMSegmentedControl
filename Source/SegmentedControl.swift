@@ -12,9 +12,9 @@ open class SegmentedControl: UIControl {
     open var itemTitles: [String] = [] {
         didSet {
             
-//            collectionView.setNeedsLayout()
+            collectionView.setNeedsLayout()
             collectionView.reloadData()
-            collectionView.layoutIfNeeded()
+//            collectionView.layoutIfNeeded()
         
 //            setNeedsLayout()
             
@@ -209,7 +209,8 @@ open class SegmentedControl: UIControl {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
-        let collectionView = UICollectionView(frame: CGRect.init(x: 0, y: 0, width: 1, height: height), collectionViewLayout: layout)
+//        let collectionView = UICollectionView(frame: CGRect.init(x: 0, y: 0, width: 1, height: height), collectionViewLayout: layout)
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         collectionView.allowsMultipleSelection          = false
         collectionView.showsHorizontalScrollIndicator   = false
         collectionView.showsVerticalScrollIndicator     = false
@@ -255,13 +256,6 @@ open class SegmentedControl: UIControl {
         bottomLine.frame = CGRect(x: 0, y: bounds.height - onePX, width: bounds.width, height: Const.onePx)
         super.layoutSubviews()
         moveLineToSelectedCellBottom(false)
-    }
-    
-    open override func willMove(toWindow newWindow: UIWindow?) {
-        super.willMove(toWindow: newWindow)
-        if newWindow?.isKeyWindow == true {
-            collectionView.reloadData()
-        }
     }
     
     // MARK: - Private Methods
