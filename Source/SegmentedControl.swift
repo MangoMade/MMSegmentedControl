@@ -12,8 +12,10 @@ open class SegmentedControl: UIControl {
     open var itemTitles: [String] = [] {
         didSet {
             
-            collectionView.setNeedsLayout()
+//            collectionView.setNeedsLayout()
             collectionView.reloadData()
+            collectionView.layoutIfNeeded()
+        
 //            setNeedsLayout()
             
             if itemTitles.count < selectedIndex + 1 {
@@ -196,6 +198,7 @@ open class SegmentedControl: UIControl {
     // MARK: - Private properties
     
     fileprivate var maxWidth: CGFloat = 0
+    fileprivate static let height: CGFloat = 60
     
     fileprivate struct ReuseIdentifier {
         static let cell = "cellReuseIdentifier"
@@ -206,12 +209,12 @@ open class SegmentedControl: UIControl {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
-        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        collectionView.allowsMultipleSelection = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = UIColor.clear
-        collectionView.alwaysBounceHorizontal = true
+        let collectionView = UICollectionView(frame: CGRect.init(x: 0, y: 0, width: 1, height: height), collectionViewLayout: layout)
+        collectionView.allowsMultipleSelection          = false
+        collectionView.showsHorizontalScrollIndicator   = false
+        collectionView.showsVerticalScrollIndicator     = false
+        collectionView.backgroundColor                  = UIColor.clear
+        collectionView.alwaysBounceHorizontal           = true
         
         return collectionView
     }()
@@ -219,7 +222,7 @@ open class SegmentedControl: UIControl {
     // MARK: - Initlization
     
     public required init(itemTitles: [String] = []) {
-
+        
         super.init(frame: CGRect.zero)
         commonInit()
         self.itemTitles = itemTitles
@@ -247,10 +250,18 @@ open class SegmentedControl: UIControl {
     
     override open func layoutSubviews() {
         collectionView.frame = bounds
+        
         let onePX = 1 / UIScreen.main.scale
         bottomLine.frame = CGRect(x: 0, y: bounds.height - onePX, width: bounds.width, height: Const.onePx)
         super.layoutSubviews()
         moveLineToSelectedCellBottom(false)
+    }
+    
+    open override func willMove(toWindow newWindow: UIWindow?) {
+        super.willMove(toWindow: newWindow)
+        if newWindow?.isKeyWindow == true {
+            collectionView.reloadData()
+        }
     }
     
     // MARK: - Private Methods
@@ -267,6 +278,8 @@ open class SegmentedControl: UIControl {
     }
     
     override open var intrinsicContentSize: CGSize {
+        
+//        collectionView.layoutIfNeeded()
         return collectionView.contentSize
     }
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		525D0C0A1EA8960600FF5844 /* MMSegmentedControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525D0C091EA8960600FF5844 /* MMSegmentedControl.framework */; };
+		526BD9CF1F1B4D290063FDA6 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526BD9CE1F1B4D290063FDA6 /* TestViewController.swift */; };
 		52E12D851EA85F7200FD3F81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E12D841EA85F7200FD3F81 /* AppDelegate.swift */; };
 		52E12D8C1EA85F7200FD3F81 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52E12D8B1EA85F7200FD3F81 /* Assets.xcassets */; };
 		52E12D8F1EA85F7200FD3F81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52E12D8D1EA85F7200FD3F81 /* LaunchScreen.storyboard */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		525D0C091EA8960600FF5844 /* MMSegmentedControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMSegmentedControl.framework; path = "../../../../Library/Developer/Xcode/DerivedData/MMSegmentedControl-fvhgsnvtrycvambmpjskiwwykdif/Build/Products/Debug-iphonesimulator/MMSegmentedControl.framework"; sourceTree = "<group>"; };
+		526BD9CE1F1B4D290063FDA6 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		52E12D811EA85F7200FD3F81 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E12D841EA85F7200FD3F81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52E12D8B1EA85F7200FD3F81 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				52E12D841EA85F7200FD3F81 /* AppDelegate.swift */,
+				526BD9CE1F1B4D290063FDA6 /* TestViewController.swift */,
 				52E12D961EA8605A00FD3F81 /* SegmentedViewController.swift */,
 				52E12D971EA8605A00FD3F81 /* ViewController.swift */,
 				52E12D9A1EA8610200FD3F81 /* Screen.swift */,
@@ -151,6 +154,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				526BD9CF1F1B4D290063FDA6 /* TestViewController.swift in Sources */,
 				52E12D991EA8605A00FD3F81 /* ViewController.swift in Sources */,
 				52E12D851EA85F7200FD3F81 /* AppDelegate.swift in Sources */,
 				52E12D981EA8605A00FD3F81 /* SegmentedViewController.swift in Sources */,

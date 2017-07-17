@@ -29,17 +29,7 @@ class ViewController: UIViewController {
         control.selectedFontSize = control.fontSize
         return control
     }()
-    
-    let fixedSegmentedControl: SegmentedControl = {
-        let control = SegmentedControl()
-        control.itemTitles          = ["推荐", "开庭", "国家情怀"]
-        
-        control.isScrollEnabled     = false
-//        control.itemWidth   = 50
-        control.leftMargin  = 10
-        control.rightMargin = 10
-        return control
-    }()
+
     
     let capsuleSegmentedControl: SegmentedControl = {
         let control = SegmentedControl()
@@ -80,40 +70,6 @@ class ViewController: UIViewController {
         view.addSubview(normalSegmentedControl)
         view.addSubview(noUnderlineSegmentedControl)
         
-//        fixedSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(fixedSegmentedControl)
-//        fixedSegmentedControl.frame = CGRect(x: 50, y: 240, width: Screen.width - 100, height: Const.barHeight)
-//        NSLayoutConstraint(item: fixedSegmentedControl,
-//                           attribute: .left,
-//                           relatedBy: .equal,
-//                           toItem: view,
-//                           attribute: .left,
-//                           multiplier: 1,
-//                           constant: 50).isActive = true
-//        
-//        NSLayoutConstraint(item: fixedSegmentedControl,
-//                           attribute: .width,
-//                           relatedBy: .equal,
-//                           toItem: nil,
-//                           attribute: .width,
-//                           multiplier: 1,
-//                           constant: Screen.width - 100).isActive = true
-//        
-//        NSLayoutConstraint(item: fixedSegmentedControl,
-//                           attribute: .height,
-//                           relatedBy: .equal,
-//                           toItem: nil,
-//                           attribute: .height,
-//                           multiplier: 1,
-//                           constant: Const.barHeight).isActive = true
-//        
-//        NSLayoutConstraint(item: fixedSegmentedControl,
-//                           attribute: .top,
-//                           relatedBy: .equal,
-//                           toItem: view,
-//                           attribute: .top,
-//                           multiplier: 1,
-//                           constant: 240).isActive = true
         
         view.addSubview(capsuleSegmentedControl)
     
@@ -122,18 +78,30 @@ class ViewController: UIViewController {
         pushButton.addTarget(self, action: #selector(push(sender:)), for: .touchUpInside)
         pushButton.frame = CGRect(x: 80, y: 500, width: 200, height: 50)
         view.addSubview(pushButton)
+        
+        
+        let testButton = UIButton(type: .system)
+        testButton.setTitle("testButton", for: .normal)
+        testButton.addTarget(self, action: #selector(test(sender:)), for: .touchUpInside)
+        testButton.frame = CGRect(x: 80, y: 550, width: 200, height: 50)
+        view.addSubview(testButton)
     }
     
     func push(sender: UIButton) {
         navigationController?.pushViewController(SegmentedViewController(), animated: true)
     }
+    
+    
+    func test(sender: UIButton) {
+        navigationController?.pushViewController(TestViewController(), animated: true)
+    }
+
 }
 
 extension UIColor {
     
     /**
      eg. UIColor.hexColor(0x000000)
-     
      */
     
     convenience init(hex hexValue: Int, alpha: CGFloat = 1) {
