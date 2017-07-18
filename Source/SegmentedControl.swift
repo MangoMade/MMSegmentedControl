@@ -5,6 +5,18 @@
 
 import UIKit
 
+class TestCollectionView: UICollectionView {
+    
+    weak var segmentedControl: SegmentedControl?
+    
+    override var contentSize: CGSize {
+        didSet {
+            segmentedControl?.invalidateIntrinsicContentSize()
+        }
+    }
+
+}
+
 open class SegmentedControl: UIControl {
 
     // MARK: - public properties
@@ -204,13 +216,12 @@ open class SegmentedControl: UIControl {
         static let cell = "cellReuseIdentifier"
     }
     
-    internal let collectionView: UICollectionView = {
+    internal let collectionView: TestCollectionView = {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
-//        let collectionView = UICollectionView(frame: CGRect.init(x: 0, y: 0, width: 1, height: height), collectionViewLayout: layout)
-        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        let collectionView = TestCollectionView(frame: CGRect.init(x: 0, y: 0, width: 1, height: height), collectionViewLayout: layout)
         collectionView.allowsMultipleSelection          = false
         collectionView.showsHorizontalScrollIndicator   = false
         collectionView.showsVerticalScrollIndicator     = false
@@ -238,6 +249,7 @@ open class SegmentedControl: UIControl {
     }
     
     private func commonInit() {
+        collectionView.segmentedControl = self
         collectionView.dataSource = self
         collectionView.delegate   = self
         collectionView.register(SegmentedControlItemCell.self, forCellWithReuseIdentifier: ReuseIdentifier.cell)
@@ -250,8 +262,10 @@ open class SegmentedControl: UIControl {
     // MARK: - Override 
     
     override open func layoutSubviews() {
-        collectionView.frame = bounds
         
+        collectionView.frame = bounds
+        collectionView.reloadData()
+
         let onePX = 1 / UIScreen.main.scale
         bottomLine.frame = CGRect(x: 0, y: bounds.height - onePX, width: bounds.width, height: Const.onePx)
         super.layoutSubviews()
@@ -272,8 +286,6 @@ open class SegmentedControl: UIControl {
     }
     
     override open var intrinsicContentSize: CGSize {
-        
-//        collectionView.layoutIfNeeded()
         return collectionView.contentSize
     }
 }
@@ -282,6 +294,7 @@ open class SegmentedControl: UIControl {
 fileprivate extension SegmentedControl {
     
     func moveLineToSelectedCellBottom(_ animated: Bool = true) {
+        
         guard !underline.isHidden && underline.superview != nil else { return }
         guard collectionView.numberOfItems(inSection: 0) > 0 else { return }
         
@@ -374,10 +387,13 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
                                layout collectionViewLayout: UICollectionViewLayout,
                                insetForSectionAt section: Int) -> UIEdgeInsets
     {
+        
         return UIEdgeInsets(top: 0, left: leftMargin, bottom: 0, right: rightMargin)
     }
     
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout collectionViewLayout: UICollectionViewLayout,
+                               minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
         if isScrollEnabled {
             return itemMargin
@@ -396,10 +412,11 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
         }
     }
     
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout collectionViewLayout: UICollectionViewLayout,
+                               minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         if isScrollEnabled {
-            return 0
+            return 20
         }
   
         let countFloat = CGFloat(itemTitles.count)
@@ -408,10 +425,12 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
             return space
         } else {
             let space = floor((bounds.width - maxWidth - leftMargin - rightMargin)/(countFloat-1))
+            /*
             print("bounds \(bounds.width)")
             print("maxWidth \(maxWidth)")
             print("space \(space)")
             print("total \(space*(countFloat-1) + leftMargin + rightMargin + countFloat * maxWidth)")
+             */
             maxWidth = 0
             return space
         }
