@@ -26,42 +26,42 @@ class TestViewController: UIViewController {
         view.backgroundColor = .white
         automaticallyAdjustsScrollViewInsets = false
 
-        fixedSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+//        fixedSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(fixedSegmentedControl)
-//        fixedSegmentedControl.frame = CGRect(x: 50, y: 240, width: Screen.width - 100, height: 64)
+        fixedSegmentedControl.frame = CGRect(x: 0, y: 240, width: Screen.width, height: 64)
         
-        NSLayoutConstraint(item: fixedSegmentedControl,
-                           attribute: .left,
-                           relatedBy: .equal,
-                           toItem: view,
-                           attribute: .left,
-                           multiplier: 1,
-                           constant: 50).isActive = true
-
-        NSLayoutConstraint(item: fixedSegmentedControl,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: nil,
-                           attribute: .width,
-                           multiplier: 1,
-                           constant: 150).isActive = true
-
-        NSLayoutConstraint(item: fixedSegmentedControl,
-                           attribute: .height,
-                           relatedBy: .equal,
-                           toItem: nil,
-                           attribute: .height,
-                           multiplier: 1,
-                           constant: 50).isActive = true
-        
-        NSLayoutConstraint(item: fixedSegmentedControl,
-                           attribute: .top,
-                           relatedBy: .equal,
-                           toItem: view,
-                           attribute: .top,
-                           multiplier: 1,
-                           constant: 240).isActive = true
+//        NSLayoutConstraint(item: fixedSegmentedControl,
+//                           attribute: .left,
+//                           relatedBy: .equal,
+//                           toItem: view,
+//                           attribute: .left,
+//                           multiplier: 1,
+//                           constant: 50).isActive = true
+//
+//        NSLayoutConstraint(item: fixedSegmentedControl,
+//                           attribute: .width,
+//                           relatedBy: .equal,
+//                           toItem: nil,
+//                           attribute: .width,
+//                           multiplier: 1,
+//                           constant: 150).isActive = true
+//
+//        NSLayoutConstraint(item: fixedSegmentedControl,
+//                           attribute: .height,
+//                           relatedBy: .equal,
+//                           toItem: nil,
+//                           attribute: .height,
+//                           multiplier: 1,
+//                           constant: 50).isActive = true
+//        
+//        NSLayoutConstraint(item: fixedSegmentedControl,
+//                           attribute: .top,
+//                           relatedBy: .equal,
+//                           toItem: view,
+//                           attribute: .top,
+//                           multiplier: 1,
+//                           constant: 240).isActive = true
 
     }
 

@@ -5,7 +5,7 @@
 
 import UIKit
 
-class TestCollectionView: UICollectionView {
+class ContentSizeWatchingCollectionView: UICollectionView {
     
     weak var segmentedControl: SegmentedControl?
     
@@ -70,20 +70,20 @@ open class SegmentedControl: UIControl {
      * 如果为false，则计算item宽度的的时候会忽略 padding和itemWidth
      * item宽度为控件宽度减去各个Margin的宽度再平分
      */
-    open var isScrollEnabled: Bool {
+    // TODO: 考虑改成居中 但是item with 和padding需要调整
+    open var isScrollEnabled: Bool = true /* {
         set {
             collectionView.isScrollEnabled = newValue
         }
         get {
             return collectionView.isScrollEnabled
         }
-    }
+    } */
     
     /*
      * item宽度
      * 如果设置了这个属性，那么每个item将会等宽，并且忽略padding值
      * 如果希望item的宽度根据内容自适应，则设置为 小于或等于0
-     * isScrollEnabled为true时有效
      */
     open var itemWidth: CGFloat     = -1 {
         didSet {
@@ -94,7 +94,6 @@ open class SegmentedControl: UIControl {
     /*
      * item的边界到字体内容的水平距离，可参考盒子模型
      * itemWidth大于0时，该属性会被忽略
-     * isScrollEnabled为true时有效
      */
     open var padding: CGFloat       = 15 {
         didSet {
@@ -209,19 +208,19 @@ open class SegmentedControl: UIControl {
     
     // MARK: - Private properties
     
-    fileprivate var maxWidth: CGFloat = 0
+    fileprivate var itemsTotalWidth: CGFloat = 0
     fileprivate static let height: CGFloat = 60
     
     fileprivate struct ReuseIdentifier {
         static let cell = "cellReuseIdentifier"
     }
     
-    internal let collectionView: TestCollectionView = {
+    internal let collectionView: ContentSizeWatchingCollectionView = {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
-        let collectionView = TestCollectionView(frame: CGRect.init(x: 0, y: 0, width: 1, height: height), collectionViewLayout: layout)
+        let collectionView = ContentSizeWatchingCollectionView(frame: CGRect.init(x: 0, y: 0, width: 1, height: height), collectionViewLayout: layout)
         collectionView.allowsMultipleSelection          = false
         collectionView.showsHorizontalScrollIndicator   = false
         collectionView.showsVerticalScrollIndicator     = false
@@ -348,25 +347,31 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
                                layout collectionViewLayout: UICollectionViewLayout,
                                sizeForItemAt indexPath: IndexPath) -> CGSize
     {
+        
         var width: CGFloat = 0
 //        if isScrollEnabled {
         
-            if itemWidth > 0 {
-                // 设置了itemWidth时，等宽
-                width = itemWidth
-            } else {
-                let text = itemTitles[indexPath.row]
-                let size = text.getTextRectSize(font: UIFont.systemFont(ofSize: fontSize),
-                                                size: CGSize(width: CGFloat(Int.max), height: CGFloat(Int.max))) // 先随便写一个
-                // 忽略itemWidth，自适应宽度
-                width = 2 * padding + size.width
-                
-                if !isScrollEnabled {
-                    // 不可滑动时，忽略item margin，计算间距时需要使用max width
-//                    maxWidth = max(width, maxWidth)
-                    maxWidth += width
-                }
+        if itemWidth > 0 {
+            /// 设置了itemWidth时，等宽
+            width = itemWidth
+        } else {
+            let text = itemTitles[indexPath.row]
+            let size = text.getTextRectSize(font: UIFont.systemFont(ofSize: fontSize),
+                                            size: CGSize(width: CGFloat(Int.max), height: CGFloat(Int.max))) // 先随便写一个
+            /// 忽略itemWidth，自适应宽度
+            width = 2 * padding + size.width
+            
+        }
+
+        /// isScrollEnabled = false时，才会用到 itemsTotalWidth
+        if !isScrollEnabled {
+            /// 可能会这个方法循环了多次，才调用 minimumLineSpacingForSectionAt
+            /// 所以在第0个的时候重置一下
+            if indexPath.row == 0 {
+                itemsTotalWidth = 0
             }
+            itemsTotalWidth += width
+        }
 //        } else {
 //            
 //            if itemWidth > 0 {
@@ -395,6 +400,7 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
                                layout collectionViewLayout: UICollectionViewLayout,
                                minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+        /*
         if isScrollEnabled {
             return itemMargin
         } else {
@@ -405,35 +411,39 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
     
                 return space
             } else {
-                let space = floor((bounds.width - countFloat * maxWidth - leftMargin - rightMargin)/(countFloat-1))
-                maxWidth = 0
+                let space = floor((bounds.width - countFloat * itemsTotalWidth - leftMargin - rightMargin)/(countFloat-1))
+                itemsTotalWidth = 0
                 return space
             }
         }
+         */
     }
     
     public func collectionView(_ collectionView: UICollectionView,
                                layout collectionViewLayout: UICollectionViewLayout,
                                minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        
         if isScrollEnabled {
-            return 20
+            return itemMargin
         }
   
         let countFloat = CGFloat(itemTitles.count)
+        let space = floor((bounds.width - itemsTotalWidth - leftMargin - rightMargin)/(countFloat-1))
+
+        itemsTotalWidth = 0
+        
+        return space
+        /*
         if itemWidth > 0 {
             let space = (bounds.width - countFloat * itemWidth - leftMargin - rightMargin)/(countFloat - 1)
             return space
         } else {
-            let space = floor((bounds.width - maxWidth - leftMargin - rightMargin)/(countFloat-1))
-            /*
-            print("bounds \(bounds.width)")
-            print("maxWidth \(maxWidth)")
-            print("space \(space)")
-            print("total \(space*(countFloat-1) + leftMargin + rightMargin + countFloat * maxWidth)")
-             */
-            maxWidth = 0
+            let space = floor((bounds.width - itemsTotalWidth - leftMargin - rightMargin)/(countFloat-1))
+
+            itemsTotalWidth = 0
             return space
         }
+         */
     }
 }
 
