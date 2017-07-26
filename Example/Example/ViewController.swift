@@ -20,15 +20,15 @@ class ViewController: UIViewController {
     
     let normalSegmentedControl = SegmentedControl(itemTitles: ["推荐", "开庭", "国家情怀", "现场", "315", "财案",  "法老汇", "天下", "北京", "体育", "娱乐" ])
 
-//    let noUnderlineSegmentedControl: SegmentedControl = {
-//        let control = SegmentedControl()
-//        control.itemTitles = ["推荐", "开庭", "国家情怀", "现场", "315", "财案", "法老汇", "天下", "北京", "体育", "娱乐" ]
-//        control.frame = CGRect(x: 0, y: 160, width: Screen.width, height: Const.barHeight)
-//        control.underline.isHidden = true
-//        control.selectedTextColor = Const.red
-//        control.selectedFontSize = control.fontSize
-//        return control
-//    }()
+    let noUnderlineSegmentedControl: SegmentedControl = {
+        let control = SegmentedControl()
+        control.itemTitles = ["推荐", "开庭", "国家情怀", "现场", "315", "财案", "法老汇", "天下", "北京", "体育", "娱乐" ]
+        control.frame = CGRect(x: 0, y: 160, width: Screen.width, height: Const.barHeight)
+        control.underline.isHidden = true
+        control.selectedTextColor = Const.red
+        control.selectedFontSize = control.fontSize
+        return control
+    }()
     
     let fixedSegmentedControl: SegmentedControl = {
         let control = SegmentedControl()
@@ -41,36 +41,36 @@ class ViewController: UIViewController {
         return control
     }()
     
-//    let capsuleSegmentedControl: SegmentedControl = {
-//        let control = SegmentedControl()
-//        control.itemTitles = ["默认", "推荐", "现场现场"]
-//  
-//        control.itemMargin  = 0
-//        control.leftMargin  = 0
-//        control.rightMargin = 0
-//        
-//        control.layer.borderColor = Const.red.cgColor
-//        control.layer.borderWidth = 1
-//        
-//        control.underline.backgroundColor = Const.red
-//        control.selectedTextColor = UIColor.white
-//        control.normalTextColor   = Const.red
-//        control.selectedFontSize  = 14
-//        control.fontSize          = 14
-//        
-//        control.bottomLine.isHidden = true
-//        
-//        control.shouldFill = true
-//        
-//        control.frame = CGRect(x: 0, y: 320, width: Screen.width/* - 140*/, height: Const.barHeight)
-//        control.itemWidth = control.bounds.width / CGFloat(control.itemTitles.count)
-//        control.lineHeight = Const.barHeight
-//        /// 原本control.lineHeight = Const.barHeight的位置
-//        control.underline.layer.cornerRadius = Const.barHeight / 2
-//        control.layer.cornerRadius = Const.barHeight / 2
-//        
-//        return control
-//    }()
+    let capsuleSegmentedControl: SegmentedControl = {
+        let control = SegmentedControl()
+        control.itemTitles = ["默认", "推荐", "现场现场"]
+  
+        control.itemMargin  = 0
+        control.leftMargin  = 0
+        control.rightMargin = 0
+        
+        control.layer.borderColor = Const.red.cgColor
+        control.layer.borderWidth = 1
+        
+        control.underline.backgroundColor = Const.red
+        control.selectedTextColor = UIColor.white
+        control.normalTextColor   = Const.red
+        control.selectedFontSize  = 14
+        control.fontSize          = 14
+        
+        control.bottomLine.isHidden = true
+        
+        control.shouldFill = true
+        
+        control.frame = CGRect(x: 0, y: 320, width: Screen.width/* - 140*/, height: Const.barHeight)
+        control.itemWidth = control.bounds.width / CGFloat(control.itemTitles.count)
+        control.lineHeight = Const.barHeight
+        /// 原本control.lineHeight = Const.barHeight的位置
+        control.underline.layer.cornerRadius = Const.barHeight / 2
+        control.layer.cornerRadius = Const.barHeight / 2
+        
+        return control
+    }()
     
     let button = UIButton(type: .system)
     
@@ -83,12 +83,12 @@ class ViewController: UIViewController {
         normalSegmentedControl.frame = CGRect(x: 0, y: 80, width: Screen.width, height: Const.barHeight)
         view.addSubview(normalSegmentedControl)
         
-//        view.addSubview(noUnderlineSegmentedControl)
-//
+        view.addSubview(noUnderlineSegmentedControl)
+
         view.addSubview(fixedSegmentedControl)
         fixedSegmentedControl.frame = CGRect(x: 50, y: 240, width: Screen.width - 50, height: Const.barHeight)
         
-//        view.addSubview(capsuleSegmentedControl) 
+        view.addSubview(capsuleSegmentedControl) 
     
         let pushButton = UIButton(type: .system)
         pushButton.setTitle("Segmented Control View", for: .normal)

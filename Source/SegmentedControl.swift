@@ -24,15 +24,16 @@ open class SegmentedControl: UIControl {
     open var itemTitles: [String] = [] {
         didSet {
             
-            collectionView.setNeedsLayout() // TODO: 考虑是否需要 setNeedsLayout
+            //collectionView.setNeedsLayout() // TODO: 考虑是否需要 setNeedsLayout
             collectionView.reloadData()
-//            collectionView.layoutIfNeeded()
 
             if itemTitles.count < selectedIndex + 1 {
                 selectedIndex = itemTitles.count - 1
                 sendActions(for: .valueChanged)
             } else {
-                moveLineToSelectedCellBottom()
+                /// 视图正在显示时，进行动画
+                /// 视图若没有显示，则不进行动画
+                moveLineToSelectedCellBottom(window?.isKeyWindow ?? false)
             }
         }
     }
@@ -40,6 +41,7 @@ open class SegmentedControl: UIControl {
     open var selectedIndex: Int = 0 {
         willSet {
             let indexPath = IndexPath(row: selectedIndex, section: 0)
+            /// if cell is visiable, set old-selected cell.isChoosing to false
             guard let cell = collectionView.cellForItem(at: indexPath) as? SegmentedControlItemCell else {
                 return
             }
@@ -341,6 +343,7 @@ fileprivate extension SegmentedControl {
 extension SegmentedControl: UICollectionViewDataSource {
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+
         return itemTitles.count
     }
     
@@ -354,91 +357,16 @@ extension SegmentedControl: UICollectionViewDataSource {
         cell.selectedTextColor = selectedTextColor
         cell.fontSize = fontSize
         cell.selectedFontSize = selectedFontSize
-        cell.set(isChoosing: indexPath.row == selectedIndex, animated: false, completion: nil)
         
         return cell
     }
     
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let isChoosing = indexPath.row == selectedIndex
+        (cell as? SegmentedControlItemCell)?.set(isChoosing: isChoosing, animated: false, completion: nil)
         if (indexPath.section, indexPath.row) == (0, 0) {
             /// 想把underline放到collectionView的最底层，还没想到什么好办法
             collectionView.sendSubview(toBack: underline)
-        }
-    }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-extension SegmentedControl: UICollectionViewDelegateFlowLayout {
-    
-    public func collectionView(_ collectionView: UICollectionView,
-                               layout collectionViewLayout: UICollectionViewLayout,
-                               sizeForItemAt indexPath: IndexPath) -> CGSize
-    {
-        
-        var width: CGFloat = 0
-
-        
-        if itemWidth > 0 {
-            /// 设置了itemWidth时，等宽
-            width = itemWidth
-        } else {
-            let text = itemTitles[indexPath.row]
-            let size = text.getTextRectSize(font: UIFont.systemFont(ofSize: fontSize),
-                                            size: CGSize(width: CGFloat(Int.max), height: CGFloat(Int.max))) // 先随便写一个
-            /// 忽略itemWidth，自适应宽度
-            width = 2 * padding + size.width
-        }
-
-        /// shouldFill = true时，才会用到 itemsTotalWidth
-        if shouldFill {
-            /// 可能会这个方法循环了多次，才调用 minimumLineSpacingForSectionAt
-            /// 所以在第0个的时候重置一下
-            if indexPath.row == 0 {
-                itemsTotalWidth = 0
-            }
-            itemsTotalWidth += width
-        }
-
-        /// It will crush if size is negative.
-        return CGSize(width: width, height: bounds.height)
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView,
-                               layout collectionViewLayout: UICollectionViewLayout,
-                               insetForSectionAt section: Int) -> UIEdgeInsets
-    {
-        
-        return UIEdgeInsets(top: 0, left: leftMargin, bottom: 0, right: rightMargin)
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView,
-                               layout collectionViewLayout: UICollectionViewLayout,
-                               minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 20
-        if !shouldFill {
-            return itemMargin
-        } else {
-            
-            let countFloat = CGFloat(itemTitles.count)
-            let space = floor((bounds.width - itemsTotalWidth - leftMargin - rightMargin)/(countFloat-1))
-            print(space)
-            return space
-        }
-    }
-    /// TODO: 永恒的问题 到底用哪个！！！
-    /// item宽度相同的时候走下面这个，宽度不同的时候走上面那个，有点扯拐，看来可能还要自己写个layout
-    public func collectionView(_ collectionView: UICollectionView,
-                               layout collectionViewLayout: UICollectionViewLayout,
-                               minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-        if !shouldFill {
-            return itemMargin
-        } else {
-      
-            let countFloat = CGFloat(itemTitles.count)
-            let space = floor((bounds.width - itemsTotalWidth - leftMargin - rightMargin)/(countFloat-1))
-            print(space)
-            return space
         }
     }
 }
@@ -454,6 +382,7 @@ extension SegmentedControl: UICollectionViewDelegate {
     }
 }
 
+// MARK: - SegmentedControlLayoutDelegate
 extension SegmentedControl: SegmentedControlLayoutDelegate {
     
     func getItemTitles(layout: SegmentedControlLayout) -> [String] {
