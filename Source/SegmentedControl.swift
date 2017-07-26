@@ -24,12 +24,10 @@ open class SegmentedControl: UIControl {
     open var itemTitles: [String] = [] {
         didSet {
             
-            collectionView.setNeedsLayout()
+            collectionView.setNeedsLayout() // TODO: 考虑是否需要 setNeedsLayout
             collectionView.reloadData()
 //            collectionView.layoutIfNeeded()
-        
-//            setNeedsLayout()
-            
+
             if itemTitles.count < selectedIndex + 1 {
                 selectedIndex = itemTitles.count - 1
                 sendActions(for: .valueChanged)
@@ -65,39 +63,49 @@ open class SegmentedControl: UIControl {
         }
     }
     
+    // MARK: Properties for layout
+    
     /* 
-     * 这个属性控制 item是否可滑动
-     * 如果为false，则计算item宽度的的时候会忽略 padding和itemWidth
-     * item宽度为控件宽度减去各个Margin的宽度再平分
+     * item是否填满整个视图
+     * 默认为false，则item会从左向右紧挨着
+     * 如果为true，则itemMargin会被忽略，间距会自动计算，使item均匀分布
+     * default is false
      */
-    // TODO: 考虑改成居中 但是item with 和padding需要调整
-    open var isScrollEnabled: Bool = true /* {
+    open var shouldFill: Bool {
         set {
-            collectionView.isScrollEnabled = newValue
+            collectionViewLayout.shouldFill = newValue
         }
         get {
-            return collectionView.isScrollEnabled
+            return collectionViewLayout.shouldFill
         }
-    } */
+    }
     
     /*
      * item宽度
      * 如果设置了这个属性，那么每个item将会等宽，并且忽略padding值
      * 如果希望item的宽度根据内容自适应，则设置为 小于或等于0
+     * default is -1
      */
-    open var itemWidth: CGFloat     = -1 {
-        didSet {
-            updateCollectionViewLayout()
+    open var itemWidth: CGFloat {
+        set {
+            collectionViewLayout.itemWidth = newValue
+        }
+        get {
+            return collectionViewLayout.itemWidth
         }
     }
     
     /*
      * item的边界到字体内容的水平距离，可参考盒子模型
      * itemWidth大于0时，该属性会被忽略
+     * default is 15
      */
-    open var padding: CGFloat       = 15 {
-        didSet {
-            updateCollectionViewLayout()
+    open var padding: CGFloat {
+        set {
+            collectionViewLayout.padding = newValue
+        }
+        get {
+            return collectionViewLayout.padding
         }
     }
     
@@ -105,31 +113,44 @@ open class SegmentedControl: UIControl {
      * 两个item之间的距离
      * 当设置了下划线时，下划线宽度与item宽度相同
      * 这个属性主要用于控制下划线的显示效果
+     * default is 0
      */
-    open var itemMargin: CGFloat    = 0 {
-        didSet {
-            updateCollectionViewLayout()
+    open var itemMargin: CGFloat {
+        set {
+            collectionViewLayout.itemMargin = newValue
+        }
+        get {
+            return collectionViewLayout.itemMargin
         }
     }
     
     /*
      * 第一个item到控件最左侧的距离
+     * default is 12
      */
-    open var leftMargin: CGFloat    = 12 {
-        didSet {
-            updateCollectionViewLayout()
+    open var leftMargin: CGFloat {
+        set {
+            collectionViewLayout.leftMargin = newValue
+        }
+        get {
+            return collectionViewLayout.leftMargin
         }
     }
     
     /*
      * 最后一个item到控件最右侧的距离
+     * default is 12
      */
-    open var rightMargin: CGFloat   = 12 {
-        didSet {
-            updateCollectionViewLayout()
+    open var rightMargin: CGFloat {
+        set {
+            collectionViewLayout.rightMargin = newValue
+        }
+        get {
+            return collectionViewLayout.rightMargin
         }
     }
     
+    // MARK: Properties for style
     /*
      * 选中状态的字体颜色
      */
@@ -168,6 +189,7 @@ open class SegmentedControl: UIControl {
      */
     open var fontSize: CGFloat = Const.defaultFontSize {
         didSet {
+            collectionViewLayout.fontSize = fontSize
             visibleCellsForEach {
                 $0.fontSize = fontSize
             }
@@ -215,10 +237,11 @@ open class SegmentedControl: UIControl {
         static let cell = "cellReuseIdentifier"
     }
     
+    private var collectionViewLayout: SegmentedControlLayout!
+    
     internal let collectionView: ContentSizeWatchingCollectionView = {
         
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+        let layout = SegmentedControlLayout()
         
         let collectionView = ContentSizeWatchingCollectionView(frame: CGRect.init(x: 0, y: 0, width: 1, height: height), collectionViewLayout: layout)
         collectionView.allowsMultipleSelection          = false
@@ -248,6 +271,9 @@ open class SegmentedControl: UIControl {
     }
     
     private func commonInit() {
+        collectionViewLayout = collectionView.collectionViewLayout as! SegmentedControlLayout
+        collectionViewLayout.delegate = self
+        
         collectionView.segmentedControl = self
         collectionView.dataSource = self
         collectionView.delegate   = self
@@ -280,6 +306,7 @@ open class SegmentedControl: UIControl {
         }
     }
     
+    // FIXME: 暂时可能没用了
     private func updateCollectionViewLayout() {
         collectionView.reloadData()
     }
@@ -349,7 +376,7 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
     {
         
         var width: CGFloat = 0
-//        if isScrollEnabled {
+
         
         if itemWidth > 0 {
             /// 设置了itemWidth时，等宽
@@ -360,11 +387,10 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
                                             size: CGSize(width: CGFloat(Int.max), height: CGFloat(Int.max))) // 先随便写一个
             /// 忽略itemWidth，自适应宽度
             width = 2 * padding + size.width
-            
         }
 
-        /// isScrollEnabled = false时，才会用到 itemsTotalWidth
-        if !isScrollEnabled {
+        /// shouldFill = true时，才会用到 itemsTotalWidth
+        if shouldFill {
             /// 可能会这个方法循环了多次，才调用 minimumLineSpacingForSectionAt
             /// 所以在第0个的时候重置一下
             if indexPath.row == 0 {
@@ -372,18 +398,7 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
             }
             itemsTotalWidth += width
         }
-//        } else {
-//            
-//            if itemWidth > 0 {
-//                // 设置了itemWidth时，等宽
-//                width = itemWidth
-//            } else {
-//                let countFloat = CGFloat(itemTitles.count)
-//                let contentWidth = bounds.width - leftMargin - rightMargin - (countFloat - 1) * itemMargin
-//                width = contentWidth / countFloat
-//            }
-//        }
-        
+
         /// It will crush if size is negative.
         return CGSize(width: width, height: bounds.height)
     }
@@ -399,51 +414,32 @@ extension SegmentedControl: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView,
                                layout collectionViewLayout: UICollectionViewLayout,
                                minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-        /*
-        if isScrollEnabled {
+        return 20
+        if !shouldFill {
             return itemMargin
         } else {
-            return 0
+            
             let countFloat = CGFloat(itemTitles.count)
-            if itemWidth > 0 {
-                let space = (bounds.width - countFloat * itemWidth - leftMargin - rightMargin)/(countFloat - 1)
-    
-                return space
-            } else {
-                let space = floor((bounds.width - countFloat * itemsTotalWidth - leftMargin - rightMargin)/(countFloat-1))
-                itemsTotalWidth = 0
-                return space
-            }
+            let space = floor((bounds.width - itemsTotalWidth - leftMargin - rightMargin)/(countFloat-1))
+            print(space)
+            return space
         }
-         */
     }
-    
+    /// TODO: 永恒的问题 到底用哪个！！！
+    /// item宽度相同的时候走下面这个，宽度不同的时候走上面那个，有点扯拐，看来可能还要自己写个layout
     public func collectionView(_ collectionView: UICollectionView,
                                layout collectionViewLayout: UICollectionViewLayout,
                                minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        
-        if isScrollEnabled {
+        return 0
+        if !shouldFill {
             return itemMargin
-        }
-  
-        let countFloat = CGFloat(itemTitles.count)
-        let space = floor((bounds.width - itemsTotalWidth - leftMargin - rightMargin)/(countFloat-1))
-
-        itemsTotalWidth = 0
-        
-        return space
-        /*
-        if itemWidth > 0 {
-            let space = (bounds.width - countFloat * itemWidth - leftMargin - rightMargin)/(countFloat - 1)
-            return space
         } else {
+      
+            let countFloat = CGFloat(itemTitles.count)
             let space = floor((bounds.width - itemsTotalWidth - leftMargin - rightMargin)/(countFloat-1))
-
-            itemsTotalWidth = 0
+            print(space)
             return space
         }
-         */
     }
 }
 
@@ -457,4 +453,12 @@ extension SegmentedControl: UICollectionViewDelegate {
         }
     }
 }
+
+extension SegmentedControl: SegmentedControlLayoutDelegate {
+    
+    func getItemTitles(layout: SegmentedControlLayout) -> [String] {
+        return itemTitles
+    }
+}
+
 

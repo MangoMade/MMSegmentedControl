@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5221D76A1EAF2AF000E68915 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5221D7691EAF2AF000E68915 /* Extension.swift */; };
+		5268F0E01F2337D700E0C560 /* SegmentedControlLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5268F0DF1F2337D700E0C560 /* SegmentedControlLayout.swift */; };
 		52E12D651EA85E4700FD3F81 /* MMSegmentedControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 52E12D631EA85E4700FD3F81 /* MMSegmentedControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		52E12D721EA85F0F00FD3F81 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E12D6C1EA85F0F00FD3F81 /* Const.swift */; };
 		52E12D741EA85F0F00FD3F81 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E12D6E1EA85F0F00FD3F81 /* SegmentedControl.swift */; };
@@ -17,6 +18,7 @@
 
 /* Begin PBXFileReference section */
 		5221D7691EAF2AF000E68915 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		5268F0DF1F2337D700E0C560 /* SegmentedControlLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlLayout.swift; sourceTree = "<group>"; };
 		52E12D601EA85E4700FD3F81 /* MMSegmentedControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MMSegmentedControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52E12D631EA85E4700FD3F81 /* MMSegmentedControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMSegmentedControl.h; sourceTree = "<group>"; };
 		52E12D641EA85E4700FD3F81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				52E12D6E1EA85F0F00FD3F81 /* SegmentedControl.swift */,
 				52E12D6F1EA85F0F00FD3F81 /* SegmentedControlItemCell.swift */,
 				52E12D701EA85F0F00FD3F81 /* SegmentedControlView.swift */,
+				5268F0DF1F2337D700E0C560 /* SegmentedControlLayout.swift */,
 				5221D7691EAF2AF000E68915 /* Extension.swift */,
 				52E12D6B1EA85EBA00FD3F81 /* Supporting Files */,
 			);
@@ -158,6 +161,7 @@
 			files = (
 				52E12D761EA85F0F00FD3F81 /* SegmentedControlView.swift in Sources */,
 				52E12D721EA85F0F00FD3F81 /* Const.swift in Sources */,
+				5268F0E01F2337D700E0C560 /* SegmentedControlLayout.swift in Sources */,
 				52E12D751EA85F0F00FD3F81 /* SegmentedControlItemCell.swift in Sources */,
 				5221D76A1EAF2AF000E68915 /* Extension.swift in Sources */,
 				52E12D741EA85F0F00FD3F81 /* SegmentedControl.swift in Sources */,

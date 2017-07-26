@@ -41,7 +41,7 @@ class SegmentedViewController: UIViewController {
         }
         segmentedView.items = items
         
-        segmentedView.segmentedControl.isScrollEnabled = false
+        segmentedView.segmentedControl.shouldFill  = true
         segmentedView.segmentedControl.leftMargin  = 30
         segmentedView.segmentedControl.rightMargin = 30
    
