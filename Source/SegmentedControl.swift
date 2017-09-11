@@ -178,10 +178,10 @@ open class SegmentedControl: UIControl {
     /*
      * 选中状态的字体大小
      */
-    open var selectedFontSize: CGFloat = Const.defaultSelectedFontSize {
+    open var selectedFont: UIFont = Const.defaultSelectedFont {
         didSet {
             visibleCellsForEach {
-                $0.selectedFontSize = selectedFontSize
+                $0.selectedFont = selectedFont
             }
         }
     }
@@ -189,11 +189,11 @@ open class SegmentedControl: UIControl {
     /*
      * 未选中状态的字体大小
      */
-    open var fontSize: CGFloat = Const.defaultFontSize {
+    open var font: UIFont = Const.defaultFont {
         didSet {
-            collectionViewLayout.fontSize = fontSize
+            collectionViewLayout.fontSize = font.pointSize
             visibleCellsForEach {
-                $0.fontSize = fontSize
+                $0.font = font
             }
         }
     }
@@ -368,8 +368,8 @@ extension SegmentedControl: UICollectionViewDataSource {
         cell.titleLabel.text = itemTitles[indexPath.row]
         cell.normalTextColor = normalTextColor
         cell.selectedTextColor = selectedTextColor
-        cell.fontSize = fontSize
-        cell.selectedFontSize = selectedFontSize
+        cell.font = font
+        cell.selectedFont = selectedFont
         
         return cell
     }

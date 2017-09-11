@@ -26,7 +26,7 @@ class ViewController: UIViewController {
         control.frame = CGRect(x: 0, y: 160, width: Screen.width, height: Const.barHeight)
         control.underline.isHidden = true
         control.selectedTextColor = Const.red
-        control.selectedFontSize = control.fontSize
+        control.selectedFont = control.font
         return control
     }()
     
@@ -55,8 +55,8 @@ class ViewController: UIViewController {
         control.underline.backgroundColor = Const.red
         control.selectedTextColor = UIColor.white
         control.normalTextColor   = Const.red
-        control.selectedFontSize  = 14
-        control.fontSize          = 14
+        control.selectedFont      = UIFont.systemFont(ofSize: 14)
+        control.font              = UIFont.systemFont(ofSize: 14)
         
         control.bottomLine.isHidden = true
         
@@ -78,6 +78,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         automaticallyAdjustsScrollViewInsets = false
+        
+        normalSegmentedControl.font = UIFont.systemFont(ofSize: 14)
+        normalSegmentedControl.selectedFont = UIFont.boldSystemFont(ofSize: 16)
         
         normalSegmentedControl.itemMargin = 30
         normalSegmentedControl.frame = CGRect(x: 0, y: 80, width: Screen.width, height: Const.barHeight)

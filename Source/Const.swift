@@ -10,8 +10,8 @@ import UIKit
 
 internal struct Const {
     
-    static let defaultFontSize: CGFloat = 15
-    static let defaultSelectedFontSize: CGFloat = 18
+    static let defaultFont: UIFont = UIFont.systemFont(ofSize: 15)
+    static let defaultSelectedFont: UIFont = UIFont.systemFont(ofSize: 18)
     static let defaultTextColor = UIColor.black
     static let defaultSelectedTextColor = UIColor(hex: 0xff4f53)
     

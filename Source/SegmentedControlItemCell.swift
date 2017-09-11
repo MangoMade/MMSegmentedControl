@@ -12,15 +12,15 @@ internal class SegmentedControlItemCell: UICollectionViewCell {
     
     let titleLabel = UILabel()
     
-    var fontSize: CGFloat = Const.defaultFontSize {
+    var font: UIFont = Const.defaultFont {
         didSet {
             updateTransform()
         }
     }
     
-    var selectedFontSize: CGFloat = Const.defaultSelectedFontSize {
+    var selectedFont: UIFont = Const.defaultSelectedFont {
         didSet {
-            titleLabel.font = UIFont.systemFont(ofSize: selectedFontSize)
+            titleLabel.font = selectedFont
             updateTransform()
         }
     }
@@ -54,19 +54,24 @@ internal class SegmentedControlItemCell: UICollectionViewCell {
         UIView.animate(withDuration: animated ? 0.15 : 0, animations: { 
             self.titleLabel.transform = self.isChoosing ? CGAffineTransform.identity : self.textTransform
             self.titleLabel.textColor = self.isChoosing ? self.selectedTextColor : self.normalTextColor
+            if self.isChoosing {
+                self.titleLabel.font = self.selectedFont
+            } else {
+                self.titleLabel.font = self.font.withSize(self.selectedFont.pointSize)
+            }
         }, completion: completion)
     }
     
     
     override init(frame: CGRect) {
-        let scale = self.selectedFontSize / self.fontSize
+        let scale = self.font.pointSize / self.selectedFont.pointSize
         textTransform = CGAffineTransform(scaleX: scale, y: scale)
         super.init(frame: frame)
         commonInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        let scale = self.selectedFontSize / self.fontSize
+        let scale = self.font.pointSize / self.selectedFont.pointSize
         textTransform = CGAffineTransform(scaleX: scale, y: scale)
         super.init(coder: aDecoder)
         commonInit()
@@ -75,7 +80,7 @@ internal class SegmentedControlItemCell: UICollectionViewCell {
     private func commonInit() {
         translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font = UIFont.systemFont(ofSize: selectedFontSize)
+        titleLabel.font = selectedFont
         titleLabel.transform = textTransform
         addSubview(titleLabel)
         
@@ -98,7 +103,7 @@ internal class SegmentedControlItemCell: UICollectionViewCell {
     }
     
     private func updateTransform() {
-        let scale = fontSize / selectedFontSize
+        let scale = self.font.pointSize / self.selectedFont.pointSize
         textTransform = CGAffineTransform(scaleX: scale, y: scale)
     }
 }

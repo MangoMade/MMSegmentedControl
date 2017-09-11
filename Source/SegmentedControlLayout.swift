@@ -57,7 +57,7 @@ internal class SegmentedControlLayout: UICollectionViewLayout {
         }
     }
     
-    internal var fontSize: CGFloat = Const.defaultFontSize {
+    internal var fontSize: CGFloat = Const.defaultFont.pointSize {
         didSet {
             if isWidthAdaptive {
                 invalidateLayout()
