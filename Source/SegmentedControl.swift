@@ -230,6 +230,18 @@ open class SegmentedControl: UIControl {
         }
     }
     
+    /*
+     * 下划线高度, 
+     * 大于或等于0时生效，否则采用默认逻辑
+     * itemWidth大于等于0时，其宽度为itemWidth
+     * 否则其宽度为字体大小 加 2 * padding
+     */
+    open var lineWidth: CGFloat = 0 {
+        didSet {
+            moveLineToSelectedCellBottom(false)
+        }
+    }
+    
     // MARK: - Private properties
     
     fileprivate var itemsTotalWidth: CGFloat = 0
@@ -334,7 +346,8 @@ fileprivate extension SegmentedControl {
             let centerY = self.lineHeight < layout.frame.maxY ? layout.frame.maxY - self.lineHeight / 2 : layout.center.y
 
             self.underline.center = CGPoint(x: layout.center.x, y: centerY)
-            self.underline.bounds = CGRect(x: 0, y: 0, width: layout.bounds.width, height: self.lineHeight)
+            let width = self.lineWidth > 0 ? self.lineWidth : layout.bounds.width
+            self.underline.bounds = CGRect(x: 0, y: 0, width: width, height: self.lineHeight)
         }
     }
 }

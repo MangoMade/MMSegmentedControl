@@ -45,7 +45,7 @@ open class SegmentedControlView: UIView {
         }
     }
     
-    private var contentView = UIScrollView()
+    let contentView = UIScrollView()
     
     // MARK" - init
     private func commonInit() {
