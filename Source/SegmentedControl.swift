@@ -153,6 +153,7 @@ open class SegmentedControl: UIControl {
     }
     
     // MARK: Properties for style
+    
     /*
      * 选中状态的字体颜色
      */
@@ -203,7 +204,7 @@ open class SegmentedControl: UIControl {
      */
     public var bottomLine: UIView = {
         let line = UIView()
-        line.backgroundColor = UIColor.lightGray
+        line.backgroundColor = UIColor.groupTableViewBackground
         line.translatesAutoresizingMaskIntoConstraints = false
         return line
     }()
@@ -215,16 +216,21 @@ open class SegmentedControl: UIControl {
      * itemWidth大于等于0时，其宽度为itemWidth
      * 否则其宽度为字体大小 加 2 * padding
      */
-    public let underline: UIView = {
-        let lineView = UIView()
-        lineView.backgroundColor = Const.defaultSelectedTextColor
-        return lineView
-    }()
+    public var underline: UIView {
+        return underlineImageView
+    }
+    
+    public var underlineImage: UIImage? {
+        didSet {
+            underlineImageView.image = underlineImage
+            moveLineToSelectedCellBottom(false)
+        }
+    }
     
     /*
      * 下划线高度
      */
-    open var lineHeight: CGFloat = 2 {
+    open var underlineHeight: CGFloat = 2 {
         didSet {
             moveLineToSelectedCellBottom(false)
         }
@@ -236,13 +242,30 @@ open class SegmentedControl: UIControl {
      * itemWidth大于等于0时，其宽度为itemWidth
      * 否则其宽度为字体大小 加 2 * padding
      */
-    open var lineWidth: CGFloat = 0 {
+    open var underlineWidth: CGFloat = 0 {
         didSet {
             moveLineToSelectedCellBottom(false)
         }
     }
     
+    /*
+     * 下划线离视图底部的偏移量,
+     * 与坐标轴相同，负值是向上偏移
+     */
+    open var underlineBottomOffset: CGFloat = 0 {
+        didSet {
+            moveLineToSelectedCellBottom(false)
+        }
+    }
+
+    
     // MARK: - Private properties
+    
+    private let underlineImageView: UIImageView = {
+        let lineView = UIImageView()
+        lineView.backgroundColor = Const.defaultSelectedTextColor
+        return lineView
+    }()
     
     fileprivate var itemsTotalWidth: CGFloat = 0
     fileprivate static let height: CGFloat = 60
@@ -342,12 +365,27 @@ fileprivate extension SegmentedControl {
         guard let layout = collectionView.layoutAttributesForItem(at: indexPath) else {
             return
         }
-        UIView.animate(withDuration: animated ? 0.25 : 0) {
-            let centerY = self.lineHeight < layout.frame.maxY ? layout.frame.maxY - self.lineHeight / 2 : layout.center.y
+        
+        let duration = animated ? 0.25 : 0
+        
+        var height: CGFloat = 0.0
+        var width: CGFloat  = 0.0
+        
+        if let image = underlineImage {
+            width  = image.size.width
+            height = image.size.height
+        } else {
+            height = underlineHeight
+            width  = underlineWidth > 0 ? underlineWidth : layout.bounds.width
+        }
+        
+        var centerY = height < layout.frame.maxY ? layout.frame.maxY - height / 2 : layout.center.y
+        centerY += underlineBottomOffset
+        
+        UIView.animate(withDuration: duration) {
 
             self.underline.center = CGPoint(x: layout.center.x, y: centerY)
-            let width = self.lineWidth > 0 ? self.lineWidth : layout.bounds.width
-            self.underline.bounds = CGRect(x: 0, y: 0, width: width, height: self.lineHeight)
+            self.underline.bounds = CGRect(x: 0, y: 0, width: width, height: height)
         }
     }
 }

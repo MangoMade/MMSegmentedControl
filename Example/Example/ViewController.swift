@@ -64,8 +64,8 @@ class ViewController: UIViewController {
         
         control.frame = CGRect(x: 0, y: 320, width: Screen.width/* - 140*/, height: Const.barHeight)
         control.itemWidth = control.bounds.width / CGFloat(control.itemTitles.count)
-        control.lineHeight = Const.barHeight
-        /// 原本control.lineHeight = Const.barHeight的位置
+        control.underlineHeight = Const.barHeight
+        /// 原本control.underlineHeight = Const.barHeight的位置
         control.underline.layer.cornerRadius = Const.barHeight / 2
         control.layer.cornerRadius = Const.barHeight / 2
         
