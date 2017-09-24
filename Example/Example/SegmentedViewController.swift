@@ -83,13 +83,13 @@ class SegmentedViewController: UIViewController {
                            multiplier: 1,
                            constant: Screen.navBarHeight).isActive = true
         
-        let change = UIBarButtonItem(title: "change", style: .plain, target: self, action: #selector(change(_:)))
+        let add = UIBarButtonItem(title: "add", style: .plain, target: self, action: #selector(add(_:)))
         
         let pop = UIBarButtonItem(title: "delete", style: .plain, target: self, action: #selector(pop(_:)))
-        navigationItem.rightBarButtonItems = [pop, change]
+        navigationItem.rightBarButtonItems = [pop, add]
     }
 
-    func change(_ sender: UIBarButtonItem) {
+    @objc func add(_ sender: UIBarButtonItem) {
         let viewController = UIViewController()
         viewController.view.backgroundColor = .white
         addChildViewController(viewController)
@@ -106,7 +106,7 @@ class SegmentedViewController: UIViewController {
         segmentedView.items.append(SegmentedControlViewItem(title: "开庭", view: viewController.view))
     }
     
-    func pop(_ sender: UIBarButtonItem) {
+    @objc func pop(_ sender: UIBarButtonItem) {
         let _ = segmentedView.items.popLast()
 //        segmentedView.segmentedControlHeight = 50
     }

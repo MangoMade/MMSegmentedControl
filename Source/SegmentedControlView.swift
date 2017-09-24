@@ -97,7 +97,7 @@ open class SegmentedControlView: UIView {
         }
     }
 
-    func indexChanged(_ sender: SegmentedControl) {
+    @objc func indexChanged(_ sender: SegmentedControl) {
 //        guard let index = segmentedControl.selectedIndex else { return }
         let index = segmentedControl.selectedIndex
         let contentOffset = CGPoint(x: CGFloat(index) * bounds.width, y: 0)

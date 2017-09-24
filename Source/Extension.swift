@@ -24,7 +24,7 @@ internal extension UIImage {
 internal extension String {
     
     func getTextRectSize(font:UIFont, size:CGSize) -> CGRect {
-        let attributes = [NSFontAttributeName: font]
+        let attributes = [NSAttributedStringKey.font: font]
         let rect:CGRect = self.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
         return rect;
     }

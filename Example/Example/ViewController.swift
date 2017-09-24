@@ -107,11 +107,11 @@ class ViewController: UIViewController {
         view.addSubview(testButton)
     }
     
-    func push(sender: UIButton) {
+    @objc func push(sender: UIButton) {
         navigationController?.pushViewController(SegmentedViewController(), animated: true)
     }
     
-    func test(sender: UIButton) {
+    @objc func test(sender: UIButton) {
         navigationController?.pushViewController(TestViewController(), animated: true)
     }
 }
