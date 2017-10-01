@@ -11,11 +11,11 @@ import UIKit
 public struct SegmentedControlViewItem {
     
     public let title: String
-    public let view: UIView
+    public let childViewController: UIViewController
     
-    public init(title: String, view: UIView) {
+    public init(title: String, childViewController: UIViewController) {
         self.title = title
-        self.view  = view
+        self.childViewController  = childViewController
     }
 }
 
@@ -25,16 +25,9 @@ open class SegmentedControlView: UIView {
     public let segmentedControl = SegmentedControl()
     
     public var items: [SegmentedControlViewItem] {
-        willSet {
-            items.map{$0.view}.forEach{ $0.removeFromSuperview() }
-        }
         didSet {
-            items.map{$0.view}.forEach(contentView.addSubview)
-            updateContentView()
-            /// 设置 itemTitles后会触发 indexChanged(_:),并且调整contentView的contentOffset
-            /// 而updateContentView 会重置contentSize,会影响contentOffset
-            /// 所以先调用updateContentView，再设置itemTitles
             segmentedControl.itemTitles = items.map{ $0.title }
+            contentView.reloadData()
         }
     }
     
@@ -45,7 +38,20 @@ open class SegmentedControlView: UIView {
         }
     }
     
-    let contentView = UIScrollView()
+    let contentView: UICollectionView = {
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = UIColor.white
+        
+        return collectionView
+    }()
+    
+    fileprivate let reuseIdentifier = "reuseIdentifier"
     
     // MARK" - init
     private func commonInit() {
@@ -54,7 +60,9 @@ open class SegmentedControlView: UIView {
         contentView.showsHorizontalScrollIndicator = false
         contentView.isPagingEnabled = true
         contentView.delegate = self
-
+        contentView.dataSource = self
+        contentView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        
         addSubview(segmentedControl)
         addSubview(contentView)
         
@@ -79,36 +87,46 @@ open class SegmentedControlView: UIView {
         let contentViewHeight = bounds.height - segmentedControlHeight
         segmentedControl.frame = CGRect(x: 0, y: 0, width: width, height: segmentedControlHeight)
         contentView.frame = CGRect(x: 0, y: segmentedControlHeight, width: width, height: contentViewHeight)
-        updateContentView()
-    }
-    
-    private func updateContentView() {
-        let width = bounds.width
-        contentView.contentSize = CGSize(width: width * CGFloat(items.count), height: contentView.bounds.height)
-        
-        items.map{$0.view}
-            .enumerated()
-            .forEach { (index, view) in
-                
-                view.frame = CGRect(x: CGFloat(index) * width,
-                                    y: 0,
-                                    width: width,
-                                    height: contentView.bounds.height)
-        }
     }
 
     @objc func indexChanged(_ sender: SegmentedControl) {
-//        guard let index = segmentedControl.selectedIndex else { return }
+
         let index = segmentedControl.selectedIndex
-        let contentOffset = CGPoint(x: CGFloat(index) * bounds.width, y: 0)
-        contentView.setContentOffset(contentOffset, animated: true)
+        contentView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
     }
 }
 
-extension SegmentedControlView: UIScrollViewDelegate {
+extension SegmentedControlView: UICollectionViewDataSource {
+    
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return items.count
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        cell.contentView.subviews.forEach{ $0.removeFromSuperview() }
+        if let view = items[indexPath.row].childViewController.view {
+            view.frame = CGRect(x: 0,
+                                y: 0,
+                                 width: contentView.bounds.width,
+                                 height: contentView.bounds.height)
+            cell.contentView.addSubview(view)
+        }
+        return cell
+    }
+}
+
+extension SegmentedControlView: UICollectionViewDelegate {
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         segmentedControl.selectedIndex = Int(scrollView.contentOffset.x / bounds.width)
+    }
+}
+
+extension SegmentedControlView: UICollectionViewDelegateFlowLayout {
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: collectionView.bounds.height)
     }
 }
 

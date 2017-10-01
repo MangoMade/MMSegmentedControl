@@ -8,6 +8,21 @@
 
 import UIKit
 import MMSegmentedControl
+
+class ChildViewController: UIViewController {
+    
+    var backgroundColor: UIColor = .white
+    
+    // MARK: - Lifecycle
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        print(#function)
+        view.backgroundColor = backgroundColor
+    }
+}
+
 class SegmentedViewController: UIViewController {
 
     private var children = [UIViewController]()
@@ -21,23 +36,23 @@ class SegmentedViewController: UIViewController {
         automaticallyAdjustsScrollViewInsets = false
         
     
-        let titles = ["推荐", "开庭"]
+        let titles = ["推荐", "开庭", "开庭", "开庭", "开庭"]
 
         let items = titles.enumerated().map { (index, title) -> SegmentedControlViewItem in
-            let viewController = UIViewController()
-            viewController.view.backgroundColor = index % 2 == 0 ? UIColor.white : UIColor.lightGray
+            let viewController = ChildViewController()
+            viewController.backgroundColor = index % 2 == 1 ? UIColor.white : UIColor.lightGray
             addChildViewController(viewController)
             viewController.didMove(toParentViewController: self)
             children.append(viewController)
             
-            let label = UILabel()
-            label.text = title
-            label.bounds = CGRect(x: 0, y: 0, width: 100, height: 50)
-            label.center = CGPoint(x: Screen.width / 2, y: 100)
-            label.textAlignment = .center
-            viewController.view.addSubview(label)
+//            let label = UILabel()
+//            label.text = title
+//            label.bounds = CGRect(x: 0, y: 0, width: 100, height: 50)
+//            label.center = CGPoint(x: Screen.width / 2, y: 100)
+//            label.textAlignment = .center
+//            viewController.view.addSubview(label)
             
-            return SegmentedControlViewItem(title: title, view: viewController.view)
+            return SegmentedControlViewItem(title: title, childViewController: viewController)
         }
         segmentedView.items = items
         
@@ -103,7 +118,7 @@ class SegmentedViewController: UIViewController {
         label.textAlignment = .center
         viewController.view.addSubview(label)
         
-        segmentedView.items.append(SegmentedControlViewItem(title: "开庭", view: viewController.view))
+        segmentedView.items.append(SegmentedControlViewItem(title: "开庭", childViewController: viewController))
     }
     
     @objc func pop(_ sender: UIBarButtonItem) {
