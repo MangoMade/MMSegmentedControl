@@ -22,6 +22,16 @@ public struct SegmentedControlViewItem {
 open class SegmentedControlView: UIView {
 
     // MARK: - Properties
+    public var selectedIndex: Int {
+        get {
+            return segmentedControl.selectedIndex
+        }
+        set {
+            segmentedControl.selectedIndex = newValue
+            segmentedControl.sendActions(for: .valueChanged)
+        }
+    }
+    
     public let segmentedControl = SegmentedControl()
     
     public var items: [SegmentedControlViewItem] {
