@@ -366,7 +366,7 @@ fileprivate extension SegmentedControl {
             return
         }
         
-        let duration = animated ? 0.25 : 0
+        let duration = animated ? Const.animationDuration : 0
         
         var height: CGFloat = 0.0
         var width: CGFloat  = 0.0

@@ -19,6 +19,8 @@ internal struct Const {
     
     static let tagsWidth: CGFloat = 72
     static let tagsHeight: CGFloat = 40
+    
+    static let animationDuration: Double = 0.25
 }
 
 internal extension UIFont {

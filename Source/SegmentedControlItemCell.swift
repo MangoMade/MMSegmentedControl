@@ -51,17 +51,21 @@ internal class SegmentedControlItemCell: UICollectionViewCell {
     
     func set(isChoosing: Bool, animated: Bool = true, completion: ((Bool) -> Void)?) {
         self.isChoosing = isChoosing
-        UIView.animate(withDuration: animated ? 0.15 : 0, animations: { 
+        let duration = Const.animationDuration / 2.0
+        UIView.animate(withDuration: animated ? duration : 0, animations: {
             self.titleLabel.transform = self.isChoosing ? CGAffineTransform.identity : self.textTransform
-            self.titleLabel.textColor = self.isChoosing ? self.selectedTextColor : self.normalTextColor
+            
             if self.isChoosing {
                 self.titleLabel.font = self.selectedFont
             } else {
                 self.titleLabel.font = self.font.withSize(self.selectedFont.pointSize)
             }
         }, completion: completion)
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + duration) {
+            self.titleLabel.textColor = self.isChoosing ? self.selectedTextColor : self.normalTextColor
+        }
     }
-    
     
     override init(frame: CGRect) {
         let scale = self.font.pointSize / self.selectedFont.pointSize
