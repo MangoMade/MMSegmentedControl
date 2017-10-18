@@ -51,8 +51,7 @@ internal class SegmentedControlItemCell: UICollectionViewCell {
     
     func set(isChoosing: Bool, animated: Bool = true, completion: ((Bool) -> Void)?) {
         self.isChoosing = isChoosing
-        let duration = Const.animationDuration / 2.0
-        UIView.animate(withDuration: animated ? duration : 0, animations: {
+        UIView.animate(withDuration: animated ? Const.animationDuration : 0, animations: {
             self.titleLabel.transform = self.isChoosing ? CGAffineTransform.identity : self.textTransform
             
             if self.isChoosing {
@@ -62,7 +61,8 @@ internal class SegmentedControlItemCell: UICollectionViewCell {
             }
         }, completion: completion)
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + duration) {
+        let after = Const.animationDuration / 2.0
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + after) {
             self.titleLabel.textColor = self.isChoosing ? self.selectedTextColor : self.normalTextColor
         }
     }
