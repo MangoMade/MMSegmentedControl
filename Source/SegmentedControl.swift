@@ -285,7 +285,7 @@ open class SegmentedControl: UIControl {
         collectionView.showsHorizontalScrollIndicator   = false
         collectionView.showsVerticalScrollIndicator     = false
         collectionView.backgroundColor                  = UIColor.clear
-        collectionView.alwaysBounceHorizontal           = true
+        collectionView.alwaysBounceHorizontal           = false
         
         return collectionView
     }()
