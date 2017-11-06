@@ -38,6 +38,7 @@ open class SegmentedControl: UIControl {
         }
     }
     
+    /// TODO: add set(index:, animated:)
     open var selectedIndex: Int = 0 {
         willSet {
             let indexPath = IndexPath(row: selectedIndex, section: 0)
@@ -49,6 +50,9 @@ open class SegmentedControl: UIControl {
         }
         
         didSet {
+            let animated = underline.bounds.size != .zero
+            moveLineToSelectedCellBottom(animated)
+            
             let indexPath = IndexPath(row: selectedIndex, section: 0)
             guard let cell = collectionView.cellForItem(at: indexPath) as? SegmentedControlItemCell else {
                 return
@@ -58,9 +62,6 @@ open class SegmentedControl: UIControl {
             }
 
             collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
-            let animated = underline.bounds.size != .zero
-            moveLineToSelectedCellBottom(animated)
-            
             isUserInteractionEnabled = false
         }
     }
