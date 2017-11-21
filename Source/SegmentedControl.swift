@@ -28,7 +28,7 @@ open class SegmentedControl: UIControl {
             collectionView.reloadData()
 
             if itemTitles.count < selectedIndex + 1 {
-                selectedIndex = itemTitles.count - 1
+                selectedIndex(itemTitles.count - 1, animated: false)
                 sendActions(for: .valueChanged)
             } else {
                 /// 视图正在显示时，进行动画
@@ -38,34 +38,9 @@ open class SegmentedControl: UIControl {
         }
     }
     
-    /// TODO: add set(index:, animated:)
-    open var selectedIndex: Int = 0 {
-        willSet {
-            let indexPath = IndexPath(row: selectedIndex, section: 0)
-            /// if cell is visiable, set old-selected cell.isChoosing to false
-            guard let cell = collectionView.cellForItem(at: indexPath) as? SegmentedControlItemCell else {
-                return
-            }
-            cell.set(isChoosing: false, completion: nil)
-        }
-        
-        didSet {
-            let animated = underline.bounds.size != .zero
-            moveLineToSelectedCellBottom(animated)
-            
-            let indexPath = IndexPath(row: selectedIndex, section: 0)
-            guard let cell = collectionView.cellForItem(at: indexPath) as? SegmentedControlItemCell else {
-                return
-            }
-            cell.set(isChoosing: true) { _ in
-                self.isUserInteractionEnabled = true
-            }
-
-            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
-            isUserInteractionEnabled = false
-        }
-    }
+    open private(set) var selectedIndex: Int = 0
     
+
     // MARK: Properties for layout
     
     /* 
@@ -299,7 +274,7 @@ open class SegmentedControl: UIControl {
         commonInit()
         self.itemTitles = itemTitles
         if self.itemTitles.count > 0 {
-            selectedIndex = 0
+            selectedIndex(selectedIndex, animated: false)
         }
     }
     
@@ -324,7 +299,7 @@ open class SegmentedControl: UIControl {
     
     // MARK: - Override 
     
-    override open func layoutSubviews() {
+    open override func layoutSubviews() {
         
         collectionView.frame = bounds
         collectionView.reloadData()
@@ -334,6 +309,34 @@ open class SegmentedControl: UIControl {
         super.layoutSubviews()
         moveLineToSelectedCellBottom(false)
     }
+    
+    // MARK: - Public Methods
+    
+    /// If you want to set selectedIndex, use selectedIndex(_ index: Int, animated: Bool)
+    open func selectedIndex(_ index: Int, animated: Bool) {
+        let indexPath = IndexPath(row: selectedIndex, section: 0)
+        /// if cell is visiable, set old-selected cell.isChoosing to false
+        if let cell = collectionView.cellForItem(at: indexPath) as? SegmentedControlItemCell {
+            cell.set(isChoosing: false, animated: animated, completion: nil)
+        }
+        
+        // 设置当前index
+        selectedIndex = index
+        
+        moveLineToSelectedCellBottom(animated)
+        
+        let selectedIndexPath = IndexPath(row: selectedIndex, section: 0)
+        if let selectedCell = collectionView.cellForItem(at: selectedIndexPath) as? SegmentedControlItemCell {
+            /// 选中新的cell
+            isUserInteractionEnabled = false
+            selectedCell.set(isChoosing: true, animated: animated) { _ in
+                self.isUserInteractionEnabled = true
+            }
+        }
+        
+        collectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: .centeredHorizontally)
+    }
+    
     
     // MARK: - Private Methods
     
@@ -349,7 +352,7 @@ open class SegmentedControl: UIControl {
         collectionView.reloadData()
     }
     
-    override open var intrinsicContentSize: CGSize {
+    open override var intrinsicContentSize: CGSize {
         return collectionView.contentSize
     }
 }
@@ -428,7 +431,7 @@ extension SegmentedControl: UICollectionViewDelegate {
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if selectedIndex != indexPath.row {
-            selectedIndex = indexPath.row
+            selectedIndex(indexPath.row, animated: true)
             sendActions(for: .valueChanged)
         }
     }

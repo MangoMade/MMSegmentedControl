@@ -22,14 +22,11 @@ public struct SegmentedControlViewItem {
 open class SegmentedControlView: UIView {
 
     // MARK: - Properties
+    
+    /// If you want to set selectedIndex, use selectedIndex(_ index: Int, animated: Bool)
     public var selectedIndex: Int {
-        get {
-            return segmentedControl.selectedIndex
-        }
-        set {
-            segmentedControl.selectedIndex = newValue
-            segmentedControl.sendActions(for: .valueChanged)
-        }
+        
+        return segmentedControl.selectedIndex
     }
     
     public let segmentedControl = SegmentedControl()
@@ -99,7 +96,11 @@ open class SegmentedControlView: UIView {
         contentView.frame = CGRect(x: 0, y: segmentedControlHeight, width: width, height: contentViewHeight)
     }
 
-    @objc func indexChanged(_ sender: SegmentedControl) {
+    open func selectedIndex(_ index: Int, animated: Bool) {
+        segmentedControl.selectedIndex(index, animated: animated)
+    }
+    
+    @objc private func indexChanged(_ sender: SegmentedControl) {
 
         let index = segmentedControl.selectedIndex
         contentView.scrollToItem(at: IndexPath(item: index, section: 0), at: .centeredHorizontally, animated: true)
@@ -129,7 +130,9 @@ extension SegmentedControlView: UICollectionViewDataSource {
 extension SegmentedControlView: UICollectionViewDelegate {
     
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        segmentedControl.selectedIndex = Int(scrollView.contentOffset.x / bounds.width)
+        let index = Int(scrollView.contentOffset.x / bounds.width)
+        segmentedControl.selectedIndex(index, animated: true)
+        segmentedControl.sendActions(for: .valueChanged)
     }
 }
 

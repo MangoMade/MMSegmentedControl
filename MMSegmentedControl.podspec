@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "MMSegmentedControl"
-  s.version      = "0.1.0"
+  s.version      = "0.1.1"
   s.summary      = "Just a customizable segmented control!"
 
   s.description  = <<-DESC
