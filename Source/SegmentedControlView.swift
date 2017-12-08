@@ -70,6 +70,9 @@ open class SegmentedControlView: UIView {
         contentView.dataSource = self
         contentView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
+        /// 用于解决subview上tableview cell右滑的手势冲突
+        contentView.canCancelContentTouches = false
+        
         addSubview(segmentedControl)
         addSubview(contentView)
         
